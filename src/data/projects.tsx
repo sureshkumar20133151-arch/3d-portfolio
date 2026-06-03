@@ -144,20 +144,27 @@ const PROJECT_SKILLS = {
 export type Project = {
   id: string;
   category: string;
+  cat: string;
   title: string;
+  desc: string;
   src: string;
   screenshots: string[];
   skills: { frontend: Skill[]; backend: Skill[] };
   content: React.ReactNode | any;
   github?: string;
   live: string;
+  price: string;
+  tag: 'Live' | 'Buy' | 'Demo' | 'Free';
+  yr: number;
 };
 
 const projects: Project[] = [
   {
     id: "pc-factory",
     category: "E-commerce Landing",
+    cat: "landing",
     title: "PC Factory Configurator",
+    desc: "3D product landing page for a custom PC brand with animated hero and pricing.",
     src: "/assets/projects-screenshots/pc-factory/hero-animation.gif?v=2",
     screenshots: ["hero-animation.gif", "configurator.png"],
     skills: {
@@ -171,6 +178,9 @@ const projects: Project[] = [
     },
     live: "https://pc-factory-v2.vercel.app",
     github: "https://github.com/sureshkumar20133151-arch/pc-fac-live",
+    price: "₹9,999",
+    tag: "Live",
+    yr: 2025,
     get content() {
       return (
         <div>
@@ -198,54 +208,11 @@ const projects: Project[] = [
     },
   },
   {
-    id: "abc-builders",
-    category: "Business Landing",
-    title: "ABC Builders Madurai",
-    src: "/assets/projects-screenshots/abc-builders/hero-animation.gif?v=7",
-    screenshots: ["hero-animation.gif", "project_villa.png", "project_apartment.png", "project_office.png"],
-    skills: {
-      frontend: [
-        PROJECT_SKILLS.react,
-        PROJECT_SKILLS.tailwind,
-      ],
-      backend: [
-        PROJECT_SKILLS.whatsapp,
-      ],
-    },
-    live: "https://abc-builders-madurai.vercel.app/",
-    github: "https://github.com/sureshkumar20133151-arch/abc-builders-madurai",
-    get content() {
-      return (
-        <div>
-          <TypographyP className="font-mono text-2xl text-center">
-            Modern Construction & Builder Showcase
-          </TypographyP>
-          <TypographyP className="font-mono ">
-            A premium business website for a construction firm in Madurai, featuring real-time project showcases, interactive design services, and direct WhatsApp consultations.
-          </TypographyP>
-          <ProjectsLinks live={this.live} repo={this.github} />
-          <SlideShow
-            images={[
-              `${BASE_PATH}/abc-builders/hero-animation.gif?v=7`,
-              `${BASE_PATH}/abc-builders/project_villa.png`,
-              `${BASE_PATH}/abc-builders/project_apartment.png`,
-              `${BASE_PATH}/abc-builders/project_office.png`,
-            ]}
-          />
-          <TypographyH3 className="my-4 mt-8">Key Features</TypographyH3>
-          <ul className="list-disc ml-6 font-mono mb-2">
-            <li>Interactive project gallery displaying villas, offices, and apartments.</li>
-            <li>Comprehensive construction service descriptions with step-by-step processes.</li>
-            <li>Integrated customer enquiry channel with direct WhatsApp CTA.</li>
-          </ul>
-        </div>
-      );
-    },
-  },
-  {
     id: "mozhi-boutique",
     category: "E-commerce Store",
-    title: "Mozhi Boutique",
+    cat: "landing",
+    title: "Mozhi Boutique Store",
+    desc: "Fashion boutique landing page with collections, lookbook, and WhatsApp CTA.",
     src: "/assets/projects-screenshots/mozhi-boutique/hero-animation.gif?v=1",
     screenshots: ["hero-animation.gif", "hero.png", "kanchi.png", "kurti.png", "lehenga.png", "cotton.png"],
     skills: {
@@ -260,6 +227,9 @@ const projects: Project[] = [
       ],
     },
     live: "http://mozhiboutique.xo.je/",
+    price: "₹9,999",
+    tag: "Live",
+    yr: 2025,
     get content() {
       return (
         <div>
@@ -290,6 +260,342 @@ const projects: Project[] = [
         </div>
       );
     },
+  },
+  {
+    id: "abc-builders",
+    category: "Business Landing",
+    cat: "ecommerce",
+    title: "ABC Builders Madurai",
+    desc: "Full e-commerce store with Razorpay checkout, product dashboard, and order tracking.",
+    src: "/assets/projects-screenshots/abc-builders/hero-animation.gif?v=7",
+    screenshots: ["hero-animation.gif", "project_villa.png", "project_apartment.png", "project_office.png"],
+    skills: {
+      frontend: [
+        PROJECT_SKILLS.react,
+        PROJECT_SKILLS.tailwind,
+      ],
+      backend: [
+        PROJECT_SKILLS.whatsapp,
+      ],
+    },
+    live: "https://abc-builders-madurai.vercel.app/",
+    github: "https://github.com/sureshkumar20133151-arch/abc-builders-madurai",
+    price: "₹18,999",
+    tag: "Live",
+    yr: 2025,
+    get content() {
+      return (
+        <div>
+          <TypographyP className="font-mono text-2xl text-center">
+            Modern Construction & Builder Showcase
+          </TypographyP>
+          <TypographyP className="font-mono ">
+            A premium business website for a construction firm in Madurai, featuring real-time project showcases, interactive design services, and direct WhatsApp consultations.
+          </TypographyP>
+          <ProjectsLinks live={this.live} repo={this.github} />
+          <SlideShow
+            images={[
+              `${BASE_PATH}/abc-builders/hero-animation.gif?v=7`,
+              `${BASE_PATH}/abc-builders/project_villa.png`,
+              `${BASE_PATH}/abc-builders/project_apartment.png`,
+              `${BASE_PATH}/abc-builders/project_office.png`,
+            ]}
+          />
+          <TypographyH3 className="my-4 mt-8">Key Features</TypographyH3>
+          <ul className="list-disc ml-6 font-mono mb-2">
+            <li>Interactive project gallery displaying villas, offices, and apartments.</li>
+            <li>Comprehensive construction service descriptions with step-by-step processes.</li>
+            <li>Integrated customer enquiry channel with direct WhatsApp CTA.</li>
+          </ul>
+        </div>
+      );
+    },
+  },
+  {
+    id: "tamil-grocery",
+    category: "Grocery App",
+    cat: "ecommerce",
+    title: "Tamil Grocery Shop",
+    desc: "Local grocery store with UPI payment, inventory management, and delivery zones.",
+    src: "/assets/projects-screenshots/tamil-grocery/hero-animation.gif",
+    screenshots: [],
+    skills: {
+      frontend: [PROJECT_SKILLS.react, PROJECT_SKILLS.tailwind],
+      backend: [PROJECT_SKILLS.postgres],
+    },
+    live: "#",
+    price: "₹18,999",
+    tag: "Demo",
+    yr: 2026,
+    get content() {
+      return (
+        <div>
+          <TypographyP className="font-mono text-2xl text-center">{this.title}</TypographyP>
+          <TypographyP className="font-mono">{this.desc}</TypographyP>
+          <ProjectsLinks live={this.live} />
+        </div>
+      );
+    }
+  },
+  {
+    id: "dental-clinic",
+    category: "Clinic Site",
+    cat: "business",
+    title: "Dental Clinic Website",
+    desc: "Professional clinic site with appointment booking, service pages, and Google Maps.",
+    src: "/assets/projects-screenshots/dental-clinic/hero-animation.gif",
+    screenshots: [],
+    skills: {
+      frontend: [PROJECT_SKILLS.react, PROJECT_SKILLS.tailwind],
+      backend: [PROJECT_SKILLS.whatsapp],
+    },
+    live: "#",
+    price: "₹9,999",
+    tag: "Live",
+    yr: 2026,
+    get content() {
+      return (
+        <div>
+          <TypographyP className="font-mono text-2xl text-center">{this.title}</TypographyP>
+          <TypographyP className="font-mono">{this.desc}</TypographyP>
+          <ProjectsLinks live={this.live} />
+        </div>
+      );
+    }
+  },
+  {
+    id: "law-firm",
+    category: "Corporate Site",
+    cat: "business",
+    title: "Law Firm Landing",
+    desc: "Corporate law firm site with case studies, team profiles, and contact form.",
+    src: "/assets/projects-screenshots/law-firm/hero-animation.gif",
+    screenshots: [],
+    skills: {
+      frontend: [PROJECT_SKILLS.react, PROJECT_SKILLS.tailwind],
+      backend: [],
+    },
+    live: "#",
+    price: "₹9,999",
+    tag: "Demo",
+    yr: 2026,
+    get content() {
+      return (
+        <div>
+          <TypographyP className="font-mono text-2xl text-center">{this.title}</TypographyP>
+          <TypographyP className="font-mono">{this.desc}</TypographyP>
+          <ProjectsLinks live={this.live} />
+        </div>
+      );
+    }
+  },
+  {
+    id: "whatsapp-bot",
+    category: "WhatsApp Tool",
+    cat: "software",
+    title: "WhatsApp Auto-Reply Bot",
+    desc: "APK that auto-replies to WhatsApp messages using custom rules and keywords.",
+    src: "/assets/projects-screenshots/whatsapp-bot/hero-animation.gif",
+    screenshots: [],
+    skills: {
+      frontend: [],
+      backend: [PROJECT_SKILLS.whatsapp, PROJECT_SKILLS.claude],
+    },
+    live: "#",
+    price: "₹999",
+    tag: "Buy",
+    yr: 2025,
+    get content() {
+      return (
+        <div>
+          <TypographyP className="font-mono text-2xl text-center">{this.title}</TypographyP>
+          <TypographyP className="font-mono">{this.desc}</TypographyP>
+          <ProjectsLinks live={this.live} />
+        </div>
+      );
+    }
+  },
+  {
+    id: "tamil-nlp",
+    category: "NLP App",
+    cat: "software",
+    title: "Tamil NLP Toolkit",
+    desc: "Android app for Tamil text processing — transliterate, summarize, and translate.",
+    src: "/assets/projects-screenshots/tamil-nlp/hero-animation.gif",
+    screenshots: [],
+    skills: {
+      frontend: [PROJECT_SKILLS.react],
+      backend: [PROJECT_SKILLS.tamil],
+    },
+    live: "#",
+    price: "₹1,499",
+    tag: "Buy",
+    yr: 2026,
+    get content() {
+      return (
+        <div>
+          <TypographyP className="font-mono text-2xl text-center">{this.title}</TypographyP>
+          <TypographyP className="font-mono">{this.desc}</TypographyP>
+          <ProjectsLinks live={this.live} />
+        </div>
+      );
+    }
+  },
+  {
+    id: "lead-scraper",
+    category: "Chrome Extension",
+    cat: "extension",
+    title: "Lead Scraper Pro",
+    desc: "Chrome extension that scrapes business emails and phones from Google Maps results.",
+    src: "/assets/projects-screenshots/lead-scraper/hero-animation.gif",
+    screenshots: [],
+    skills: {
+      frontend: [PROJECT_SKILLS.chrome, PROJECT_SKILLS.js],
+      backend: [PROJECT_SKILLS.sheets],
+    },
+    live: "#",
+    price: "₹499",
+    tag: "Buy",
+    yr: 2025,
+    get content() {
+      return (
+        <div>
+          <TypographyP className="font-mono text-2xl text-center">{this.title}</TypographyP>
+          <TypographyP className="font-mono">{this.desc}</TypographyP>
+          <ProjectsLinks live={this.live} />
+        </div>
+      );
+    }
+  },
+  {
+    id: "tab-session",
+    category: "Chrome Extension",
+    cat: "extension",
+    title: "Tab Session Manager",
+    desc: "Save, restore, and share browser sessions with one click.",
+    src: "/assets/projects-screenshots/tab-session/hero-animation.gif",
+    screenshots: [],
+    skills: {
+      frontend: [PROJECT_SKILLS.chrome, PROJECT_SKILLS.js],
+      backend: [],
+    },
+    live: "#",
+    price: "₹299",
+    tag: "Buy",
+    yr: 2026,
+    get content() {
+      return (
+        <div>
+          <TypographyP className="font-mono text-2xl text-center">{this.title}</TypographyP>
+          <TypographyP className="font-mono">{this.desc}</TypographyP>
+          <ProjectsLinks live={this.live} />
+        </div>
+      );
+    }
+  },
+  {
+    id: "form-whatsapp",
+    category: "n8n Workflow",
+    cat: "automation",
+    title: "Form → WhatsApp Alert",
+    desc: "n8n workflow: form submitted → instant WhatsApp notification + Google Sheets log.",
+    src: "/assets/projects-screenshots/form-whatsapp/hero-animation.gif",
+    screenshots: [],
+    skills: {
+      frontend: [],
+      backend: [PROJECT_SKILLS.whatsapp, PROJECT_SKILLS.sheets],
+    },
+    live: "#",
+    price: "₹14,999",
+    tag: "Demo",
+    yr: 2025,
+    get content() {
+      return (
+        <div>
+          <TypographyP className="font-mono text-2xl text-center">{this.title}</TypographyP>
+          <TypographyP className="font-mono">{this.desc}</TypographyP>
+          <ProjectsLinks live={this.live} />
+        </div>
+      );
+    }
+  },
+  {
+    id: "invoice-generator",
+    category: "Zapier Flow",
+    cat: "automation",
+    title: "Invoice Auto-Generator",
+    desc: "Zapier automation that creates and emails GST invoices when orders are placed.",
+    src: "/assets/projects-screenshots/invoice-generator/hero-animation.gif",
+    screenshots: [],
+    skills: {
+      frontend: [],
+      backend: [PROJECT_SKILLS.sheets],
+    },
+    live: "#",
+    price: "₹14,999",
+    tag: "Demo",
+    yr: 2026,
+    get content() {
+      return (
+        <div>
+          <TypographyP className="font-mono text-2xl text-center">{this.title}</TypographyP>
+          <TypographyP className="font-mono">{this.desc}</TypographyP>
+          <ProjectsLinks live={this.live} />
+        </div>
+      );
+    }
+  },
+  {
+    id: "ai-image-gen",
+    category: "AI SaaS Tool",
+    cat: "ai",
+    title: "AI Product Image Generator",
+    desc: "Claude API-powered tool that generates lifestyle product photos from simple prompts.",
+    src: "/assets/projects-screenshots/ai-image-gen/hero-animation.gif",
+    screenshots: [],
+    skills: {
+      frontend: [PROJECT_SKILLS.react, PROJECT_SKILLS.tailwind],
+      backend: [PROJECT_SKILLS.claude],
+    },
+    live: "#",
+    price: "₹24,999",
+    tag: "Live",
+    yr: 2025,
+    get content() {
+      return (
+        <div>
+          <TypographyP className="font-mono text-2xl text-center">{this.title}</TypographyP>
+          <TypographyP className="font-mono">{this.desc}</TypographyP>
+          <ProjectsLinks live={this.live} />
+        </div>
+      );
+    }
+  },
+  {
+    id: "tamil-chatbot",
+    category: "AI Agent",
+    cat: "ai",
+    title: "Tamil Chatbot for Shops",
+    desc: "WhatsApp chatbot with Tamil NLP that answers product and order queries 24/7.",
+    src: "/assets/projects-screenshots/tamil-chatbot/hero-animation.gif",
+    screenshots: [],
+    skills: {
+      frontend: [],
+      backend: [PROJECT_SKILLS.whatsapp, PROJECT_SKILLS.claude, PROJECT_SKILLS.tamil],
+    },
+    live: "#",
+    price: "₹24,999",
+    tag: "Live",
+    yr: 2026,
+    get content() {
+      return (
+        <div>
+          <TypographyP className="font-mono text-2xl text-center">{this.title}</TypographyP>
+          <TypographyP className="font-mono">{this.desc}</TypographyP>
+          <ProjectsLinks live={this.live} />
+        </div>
+      );
+    }
   },
 ];
 

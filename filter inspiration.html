@@ -1,0 +1,154 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.wrap{padding:2rem 0}
+.top{display:flex;flex-direction:column;gap:1rem;margin-bottom:1.75rem}
+.top h2{font-size:22px;font-weight:500;color:var(--color-text-primary)}
+.top p{font-size:14px;color:var(--color-text-secondary);max-width:480px}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:6px 14px;border-radius:20px;font-size:13px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;transition:all .15s}
+.chip:hover{border-color:var(--color-border-primary);color:var(--color-text-primary)}
+.chip.active{background:#EEEDFE;border-color:#AFA9EC;color:#3C3489}
+.search-row{display:flex;gap:10px;align-items:center}
+.search-wrap{position:relative;flex:1;max-width:320px}
+.search-wrap i{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--color-text-tertiary);pointer-events:none}
+.search-wrap input{padding:8px 10px 8px 34px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-primary);font-size:13px;width:100%;outline:none}
+.search-wrap input:focus{border-color:var(--color-border-primary)}
+.sort-sel{padding:8px 12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);font-size:13px;cursor:pointer}
+.count{font-size:13px;color:var(--color-text-tertiary);margin-left:auto;align-self:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.1rem;cursor:pointer;transition:border-color .15s}
+.card:hover{border-color:var(--color-border-primary)}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+.icon-box{width:38px;height:38px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;font-size:18px}
+.badge{font-size:11px;padding:3px 9px;border-radius:12px;font-weight:500}
+.card h3{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:5px;line-height:1.4}
+.card p{font-size:12px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:10px}
+.card-footer{display:flex;align-items:center;justify-content:space-between}
+.price{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.try-btn{font-size:12px;padding:5px 11px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);cursor:pointer;display:flex;align-items:center;gap:4px}
+.try-btn:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+.empty{text-align:center;padding:3rem 1rem;color:var(--color-text-tertiary);font-size:14px;grid-column:1/-1}
+.empty i{font-size:32px;display:block;margin-bottom:.5rem}
+</style>
+
+<h2 class="sr-only">Portfolio projects filter and gallery</h2>
+
+<div class="wrap">
+  <div class="top">
+    <div>
+      <h2>Projects & Products</h2>
+      <p style="margin-top:6px">Explore all work — filter by category or search by name.</p>
+    </div>
+    <div class="search-row">
+      <div class="search-wrap">
+        <i class="ti ti-search" aria-hidden="true"></i>
+        <input type="text" id="searchInput" placeholder="Search projects..." oninput="render()">
+      </div>
+      <select class="sort-sel" onchange="render()" id="sortSel">
+        <option value="newest">Newest first</option>
+        <option value="price-low">Price: low to high</option>
+        <option value="price-high">Price: high to low</option>
+        <option value="az">A → Z</option>
+      </select>
+      <span class="count" id="countLabel"></span>
+    </div>
+    <div class="filters" id="filterRow"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<script>
+const cats = [
+  {id:'all', label:'All'},
+  {id:'landing', label:'Landing Pages'},
+  {id:'ecommerce', label:'E-Commerce'},
+  {id:'business', label:'Business Sites'},
+  {id:'software', label:'Softwares / APK'},
+  {id:'extension', label:'Chrome Extensions'},
+  {id:'automation', label:'Automation'},
+  {id:'ai', label:'AI Projects'},
+];
+
+const catMeta = {
+  landing:{icon:'ti-layout-navbar',bg:'#E6F1FB',clr:'#0C447C',badgeBg:'#B5D4F4',badgeClr:'#0C447C'},
+  ecommerce:{icon:'ti-shopping-cart',bg:'#EAF3DE',clr:'#27500A',badgeBg:'#C0DD97',badgeClr:'#27500A'},
+  business:{icon:'ti-building-store',bg:'#EEEDFE',clr:'#3C3489',badgeBg:'#CECBF6',badgeClr:'#3C3489'},
+  software:{icon:'ti-device-mobile',bg:'#FAEEDA',clr:'#633806',badgeBg:'#FAC775',badgeClr:'#633806'},
+  extension:{icon:'ti-puzzle',bg:'#E1F5EE',clr:'#085041',badgeBg:'#9FE1CB',badgeClr:'#085041'},
+  automation:{icon:'ti-robot',bg:'#FCEBEB',clr:'#791F1F',badgeBg:'#F7C1C1',badgeClr:'#791F1F'},
+  ai:{icon:'ti-brain',bg:'#FBEAF0',clr:'#72243E',badgeBg:'#F4C0D1',badgeClr:'#72243E'},
+};
+
+const items = [
+  {id:1,cat:'landing',title:'PC Factory Configurator',desc:'3D product landing page for a custom PC brand with animated hero and pricing.',price:'₹9,999',tag:'Live',yr:2025},
+  {id:2,cat:'landing',title:'Mozhi Boutique Store',desc:'Fashion boutique landing page with collections, lookbook, and WhatsApp CTA.',price:'₹9,999',tag:'Live',yr:2025},
+  {id:3,cat:'ecommerce',title:'ABC Builders Madurai',desc:'Full e-commerce store with Razorpay checkout, product dashboard, and order tracking.',price:'₹18,999',tag:'Live',yr:2025},
+  {id:4,cat:'ecommerce',title:'Tamil Grocery Shop',desc:'Local grocery store with UPI payment, inventory management, and delivery zones.',price:'₹18,999',tag:'Demo',yr:2026},
+  {id:5,cat:'business',title:'Dental Clinic Website',desc:'Professional clinic site with appointment booking, service pages, and Google Maps.',price:'₹9,999',tag:'Live',yr:2026},
+  {id:6,cat:'business',title:'Law Firm Landing',desc:'Corporate law firm site with case studies, team profiles, and contact form.',price:'₹9,999',tag:'Demo',yr:2026},
+  {id:7,cat:'software',title:'WhatsApp Auto-Reply Bot',desc:'APK that auto-replies to WhatsApp messages using custom rules and keywords.',price:'₹999',tag:'Buy',yr:2025},
+  {id:8,cat:'software',title:'Tamil NLP Toolkit',desc:'Android app for Tamil text processing — transliterate, summarize, and translate.',price:'₹1,499',tag:'Buy',yr:2026},
+  {id:9,cat:'extension',title:'Lead Scraper Pro',desc:'Chrome extension that scrapes business emails and phones from Google Maps results.',price:'₹499',tag:'Buy',yr:2025},
+  {id:10,cat:'extension',title:'Tab Session Manager',desc:'Save, restore, and share browser sessions with one click.',price:'₹299',tag:'Buy',yr:2026},
+  {id:11,cat:'automation',title:'Form → WhatsApp Alert',desc:'n8n workflow: form submitted → instant WhatsApp notification + Google Sheets log.',price:'₹14,999',tag:'Demo',yr:2025},
+  {id:12,cat:'automation',title:'Invoice Auto-Generator',desc:'Zapier automation that creates and emails GST invoices when orders are placed.',price:'₹14,999',tag:'Demo',yr:2026},
+  {id:13,cat:'ai',title:'AI Product Image Generator',desc:'Claude API-powered tool that generates lifestyle product photos from simple prompts.',price:'₹24,999',tag:'Live',yr:2025},
+  {id:14,cat:'ai',title:'Tamil Chatbot for Shops',desc:'WhatsApp chatbot with Tamil NLP that answers product and order queries 24/7.',price:'₹24,999',tag:'Live',yr:2026},
+];
+
+let active = 'all';
+
+function setFilter(id){
+  active = id;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.id===id));
+  render();
+}
+
+const fr = document.getElementById('filterRow');
+cats.forEach(c=>{
+  const b = document.createElement('button');
+  b.className='chip'+(c.id==='all'?' active':'');
+  b.dataset.id=c.id;
+  b.textContent=c.label;
+  b.onclick=()=>setFilter(c.id);
+  fr.appendChild(b);
+});
+
+function tagStyle(tag){
+  if(tag==='Live') return 'background:#EAF3DE;color:#27500A';
+  if(tag==='Buy') return 'background:#EEEDFE;color:#3C3489';
+  return 'background:#FAEEDA;color:#633806';
+}
+
+function render(){
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const sort = document.getElementById('sortSel').value;
+  let list = items.filter(i=>(active==='all'||i.cat===active)&&(!q||(i.title+' '+i.desc).toLowerCase().includes(q)));
+  if(sort==='price-low') list=[...list].sort((a,b)=>parseInt(a.price.replace(/\D/g,''))-parseInt(b.price.replace(/\D/g,'')));
+  else if(sort==='price-high') list=[...list].sort((a,b)=>parseInt(b.price.replace(/\D/g,''))-parseInt(a.price.replace(/\D/g,'')));
+  else if(sort==='az') list=[...list].sort((a,b)=>a.title.localeCompare(b.title));
+  else list=[...list].sort((a,b)=>b.yr-a.yr);
+  document.getElementById('countLabel').textContent = list.length+' project'+(list.length!==1?'s':'');
+  const g = document.getElementById('grid');
+  if(!list.length){g.innerHTML='<div class="empty"><i class="ti ti-search-off" aria-hidden="true"></i>No projects match your search.</div>';return;}
+  g.innerHTML = list.map(item=>{
+    const m = catMeta[item.cat];
+    const label = cats.find(c=>c.id===item.cat).label;
+    return `<div class="card" onclick="sendPrompt('Tell me more about the ${item.title} project')">
+      <div class="card-top">
+        <div class="icon-box" style="background:${m.bg}"><i class="ti ${m.icon}" style="color:${m.clr}" aria-hidden="true"></i></div>
+        <span class="badge" style="${tagStyle(item.tag)}">${item.tag}</span>
+      </div>
+      <h3>${item.title}</h3>
+      <p>${item.desc}</p>
+      <div class="card-footer">
+        <span class="price">${item.price}</span>
+        <button class="try-btn" onclick="event.stopPropagation();sendPrompt('Show me a demo or details for ${item.title}')"><i class="ti ti-eye" aria-hidden="true"></i> Preview</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+render();
+</script>

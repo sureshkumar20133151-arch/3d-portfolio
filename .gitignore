@@ -41,3 +41,5 @@ next-env.d.ts
 **/_frames_smooth/
 **/_frames_supersmooth/
 **/_record_temp/
+
+.vercel

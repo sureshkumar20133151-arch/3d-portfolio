@@ -10,7 +10,7 @@ import {
 import { FloatingDock } from "../ui/floating-dock";
 import { ScrollArea } from "../ui/scroll-area";
 import Link from "next/link";
-import { ArrowUpRight, Search, Layout, ShoppingCart, Building, Smartphone, Puzzle, Bot, Brain, Eye } from "lucide-react";
+import { ArrowUpRight, Search } from "lucide-react";
 import { motion } from "motion/react";
 
 import projects, { Project } from "@/data/projects";
@@ -28,29 +28,31 @@ const categories = [
   { id: "ai", label: "AI Projects" },
 ];
 
-const catMeta: Record<string, { icon: React.ReactNode; bg: string; clr: string }> = {
-  landing: { icon: <Layout className="w-4 h-4" />, bg: "#E6F1FB", clr: "#0C447C" },
-  ecommerce: { icon: <ShoppingCart className="w-4 h-4" />, bg: "#EAF3DE", clr: "#27500A" },
-  business: { icon: <Building className="w-4 h-4" />, bg: "#EEEDFE", clr: "#3C3489" },
-  software: { icon: <Smartphone className="w-4 h-4" />, bg: "#FAEEDA", clr: "#633806" },
-  extension: { icon: <Puzzle className="w-4 h-4" />, bg: "#E1F5EE", clr: "#085041" },
-  automation: { icon: <Bot className="w-4 h-4" />, bg: "#FCEBEB", clr: "#791F1F" },
-  ai: { icon: <Brain className="w-4 h-4" />, bg: "#FBEAF0", clr: "#72243E" },
+const getProjectDesc = (id: string) => {
+  if (id === "pc-factory") return "Custom PC builder with live pricing, EMI calculator, and WhatsApp CTA. Built for a Chennai computer shop to get online orders.";
+  if (id === "abc-builders") return "A premium business website for a construction firm in Madurai, featuring real-time project showcases, interactive design services, and direct WhatsApp consultations.";
+  if (id === "mozhi-boutique") return "A customized e-commerce storefront for Mozhi Boutique, a Tamil Nadu ethnic fashion brand. Features an Amazon-style vertical product gallery with hover zoom, slide-out cart drawer, and live WhatsApp order integration.";
+  return "";
 };
 
-const getTagStyle = (tag: string) => {
-  switch (tag) {
-    case "Live":
-      return "bg-[#EAF3DE] text-[#27500A] dark:bg-emerald-950/40 dark:text-emerald-300";
-    case "Buy":
-      return "bg-[#EEEDFE] text-[#3C3489] dark:bg-indigo-950/40 dark:text-indigo-300";
-    case "Demo":
-      return "bg-[#FAEEDA] text-[#633806] dark:bg-amber-950/40 dark:text-amber-300";
-    case "Free":
-      return "bg-[#E0F2FE] text-[#0369A1] dark:bg-sky-950/40 dark:text-sky-300";
-    default:
-      return "bg-slate-100 text-slate-700 dark:bg-zinc-800 dark:text-zinc-300";
-  }
+const getProjectMeta = (id: string) => {
+  if (id === "pc-factory") return { val: 9999, yr: 2025 };
+  if (id === "abc-builders") return { val: 18999, yr: 2025 };
+  if (id === "mozhi-boutique") return { val: 9999, yr: 2025 };
+  return { val: 0, yr: 2026 };
+};
+
+const matchesCategory = (category: string, catId: string) => {
+  if (catId === "all") return true;
+  const cat = category.toLowerCase();
+  if (catId === "landing") return cat.includes("landing");
+  if (catId === "ecommerce") return cat.includes("e-commerce") || cat.includes("store") || cat.includes("shop");
+  if (catId === "business") return cat.includes("business") || cat.includes("clinic") || cat.includes("firm");
+  if (catId === "software") return cat.includes("app") || cat.includes("tool") || cat.includes("software") || cat.includes("apk");
+  if (catId === "extension") return cat.includes("extension");
+  if (catId === "automation") return cat.includes("workflow") || cat.includes("automation") || cat.includes("flow");
+  if (catId === "ai") return cat.includes("ai") || cat.includes("agent") || cat.includes("chatbot");
+  return false;
 };
 
 const ProjectsSection = () => {
@@ -60,31 +62,24 @@ const ProjectsSection = () => {
 
   const filteredProjects = useMemo(() => {
     let list = projects.filter((p) => {
-      const matchesCat = selectedCat === "all" || p.cat === selectedCat;
+      const matchesCat = matchesCategory(p.category, selectedCat);
+      const desc = getProjectDesc(p.id);
       const matchesSearch =
         !search ||
         p.title.toLowerCase().includes(search.toLowerCase()) ||
-        p.desc.toLowerCase().includes(search.toLowerCase());
+        desc.toLowerCase().includes(search.toLowerCase());
       return matchesCat && matchesSearch;
     });
 
     if (sort === "price-low") {
-      list = [...list].sort((a, b) => {
-        const pA = parseInt(a.price.replace(/\D/g, "")) || 0;
-        const pB = parseInt(b.price.replace(/\D/g, "")) || 0;
-        return pA - pB;
-      });
+      list = [...list].sort((a, b) => getProjectMeta(a.id).val - getProjectMeta(b.id).val);
     } else if (sort === "price-high") {
-      list = [...list].sort((a, b) => {
-        const pA = parseInt(a.price.replace(/\D/g, "")) || 0;
-        const pB = parseInt(b.price.replace(/\D/g, "")) || 0;
-        return pB - pA;
-      });
+      list = [...list].sort((a, b) => getProjectMeta(b.id).val - getProjectMeta(a.id).val);
     } else if (sort === "az") {
       list = [...list].sort((a, b) => a.title.localeCompare(b.title));
     } else {
-      // default: newest (yr descending)
-      list = [...list].sort((a, b) => b.yr - a.yr);
+      // default: newest
+      list = [...list].sort((a, b) => getProjectMeta(b.id).yr - getProjectMeta(a.id).yr);
     }
 
     return list;
@@ -92,7 +87,7 @@ const ProjectsSection = () => {
 
   return (
     <SectionWrapper id="projects" className="max-w-7xl mx-auto min-h-screen py-16 px-4 md:px-8">
-      <SectionHeader id="projects" title="Projects & Products" />
+      <SectionHeader id="projects" title="Projects" />
 
       {/* Filter Chips */}
       <div className="flex flex-wrap gap-2 mb-6 max-w-6xl mx-auto">
@@ -152,7 +147,7 @@ const ProjectsSection = () => {
           <p className="text-sm">No projects match your search criteria.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-6xl mx-auto gap-[14px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto gap-8">
           {filteredProjects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
@@ -163,46 +158,33 @@ const ProjectsSection = () => {
 };
 
 const ProjectCard = ({ project }: { project: Project }) => {
-  const meta = catMeta[project.cat] || catMeta.landing;
   return (
-    <div className="w-full flex h-full">
+    <div className="flex items-center justify-center w-full h-full">
       <ResponsiveDialog>
-        <ResponsiveDialogTrigger className="bg-transparent flex w-full text-left h-full focus:outline-none">
-          <div className="bg-white dark:bg-zinc-950 border-[0.5px] border-slate-200 dark:border-zinc-900 rounded-[12px] p-4.5 w-full flex flex-col justify-between hover:border-slate-400 dark:hover:border-zinc-700 transition-all duration-150 shadow-none hover:shadow-none h-full">
-            <div>
-              {/* Card top */}
-              <div className="flex items-center justify-between mb-4 w-full">
-                <div
-                  className="w-9 h-9 rounded-lg flex items-center justify-center"
-                  style={{ backgroundColor: meta.bg, color: meta.clr }}
-                >
-                  {meta.icon}
+        <ResponsiveDialogTrigger className="bg-transparent flex justify-center w-full focus:outline-none h-full">
+          <div
+            className="relative w-full max-w-[400px] rounded-lg overflow-hidden cursor-pointer h-full"
+            style={{ aspectRatio: "3/2" }}
+          >
+            <Image
+              className="absolute w-full h-full top-0 left-0 hover:scale-[1.05] transition-all object-cover"
+              src={project.src}
+              alt={project.title}
+              width={300}
+              height={300}
+              unoptimized={project.src.includes(".gif")}
+            />
+            <div className="absolute w-full h-1/2 bottom-0 left-0 bg-gradient-to-t from-background via-background/85 to-transparent pointer-events-none">
+              <div className="flex flex-col h-full items-start justify-end p-6">
+                <div className="text-lg text-left text-foreground font-display">{project.title}</div>
+                <div className="text-xs bg-primary text-primary-foreground rounded-lg w-fit px-2 mt-1">
+                  {project.category}
                 </div>
-                <span className={`text-[10px] font-semibold px-2.5 py-0.5 rounded-full ${getTagStyle(project.tag)}`}>
-                  {project.tag}
-                </span>
               </div>
-              {/* Card title */}
-              <h3 className="text-slate-900 dark:text-zinc-100 font-semibold text-sm mb-1 leading-snug">
-                {project.title}
-              </h3>
-              {/* Card description */}
-              <p className="text-slate-500 dark:text-zinc-400 text-xs leading-relaxed mb-4 line-clamp-3">
-                {project.desc}
-              </p>
-            </div>
-            {/* Card footer */}
-            <div className="flex items-center justify-between mt-auto pt-3 border-t border-slate-100 dark:border-zinc-900 w-full">
-              <span className="text-slate-900 dark:text-zinc-100 font-bold text-xs">
-                {project.price}
-              </span>
-              <span className="border border-slate-200 dark:border-zinc-800 text-slate-600 dark:text-zinc-300 bg-transparent hover:bg-slate-50 dark:hover:bg-zinc-900 text-[11px] px-2.5 py-1 rounded-[8px] flex items-center gap-1 transition-all">
-                <Eye className="w-3.5 h-3.5" />
-                Preview
-              </span>
             </div>
           </div>
         </ResponsiveDialogTrigger>
+
         <ResponsiveDialogContent className="md:max-w-4xl md:h-[85vh] md:!flex md:flex-col md:overflow-hidden md:p-0 md:gap-0">
           {/* Sticky header */}
           <div className="shrink-0 border-b border-border bg-background/80 backdrop-blur-sm px-8 py-5">
@@ -247,7 +229,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
-                className="flex flex-col md:flex-row gap-6 md:gap-10 mb-10 animate-fade-in"
+                className="flex flex-col md:flex-row gap-6 md:gap-10 mb-10"
               >
                 {project.skills.frontend?.length > 0 && (
                   <div className="flex flex-col items-center md:items-start gap-2">

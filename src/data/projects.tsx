@@ -141,6 +141,14 @@ const PROJECT_SKILLS = {
   }
 };
 
+export type Platform = {
+  type: "web" | "android" | "chrome" | "windows";
+  label: string;
+  url: string;
+  buttonLabel: string;
+  available: boolean;
+};
+
 export type Project = {
   id: string;
   category: string;
@@ -151,6 +159,7 @@ export type Project = {
   content: React.ReactNode | any;
   github?: string;
   live: string;
+  platforms?: Platform[];
 };
 
 const projects: Project[] = [
@@ -286,6 +295,79 @@ const projects: Project[] = [
             <li>Amazon-style vertical thumbnail gallery with 2x hover zoom and lightbox.</li>
             <li>Slide-out Cart Drawer and Quick View modal for optimized buyer flows.</li>
             <li>WhatsApp Order Confirmation and automated consultation CTA.</li>
+          </ul>
+        </div>
+      );
+    },
+  },
+  {
+    id: "budget-tracker",
+    category: "Web App / Mobile App",
+    title: "Budget Tracker",
+    src: "/assets/projects-screenshots/budget-tracker/dashboard.png",
+    screenshots: ["dashboard.png"],
+    skills: {
+      frontend: [
+        PROJECT_SKILLS.react,
+        PROJECT_SKILLS.tailwind,
+      ],
+      backend: [
+        PROJECT_SKILLS.postgres,
+      ],
+    },
+    live: "https://budgettracker.vercel.app",
+    github: "https://github.com/sureshkumar20133151-arch/budget-tracker",
+    platforms: [
+      {
+        type: "web",
+        label: "Web App",
+        url: "https://budgettracker.vercel.app",
+        buttonLabel: "Open Web App",
+        available: true,
+      },
+      {
+        type: "android",
+        label: "Android App",
+        url: "https://drive.google.com/file/d/1tBNDxLz-9u1Xk1Fw9oY_R5T92v4V04_J/view?usp=sharing",
+        buttonLabel: "Download APK",
+        available: true,
+      },
+      {
+        type: "chrome",
+        label: "Chrome Extension",
+        url: "#",
+        buttonLabel: "Add to Chrome",
+        available: false,
+      },
+      {
+        type: "windows",
+        label: "Windows App",
+        url: "https://drive.google.com/file/d/1tBNDxLz-9u1Xk1Fw9oY_R5T92v4V04_J/view?usp=sharing",
+        buttonLabel: "Download .exe",
+        available: true,
+      },
+    ],
+    get content() {
+      return (
+        <div>
+          <TypographyP className="font-mono text-2xl text-center">
+            Smart Personal Finance SaaS
+          </TypographyP>
+          <TypographyP className="font-mono">
+            A B2C SaaS budget tracker built for modern personal finance tracking. Supports multi-platform availability across browsers, Windows desktops, and Android mobile devices. Fully integrated with Razorpay subscription checkout.
+          </TypographyP>
+          <ProjectsLinks live={this.live} repo={this.github} />
+          <SlideShow
+            images={[
+              `${BASE_PATH}/budget-tracker/dashboard.png`,
+            ]}
+          />
+          <TypographyH3 className="my-4 mt-8">Key Features</TypographyH3>
+          <ul className="list-disc ml-6 font-mono mb-2">
+            <li>Sleek, responsive dashboard with circular budget indicators.</li>
+            <li>Razorpay payment gateway integration for subscription billing.</li>
+            <li>Cross-platform builds compiled for Android (APK) and Windows Desktop (.exe).</li>
+            <li>Supabase cloud integration for real-time secure database synchronization.</li>
           </ul>
         </div>
       );

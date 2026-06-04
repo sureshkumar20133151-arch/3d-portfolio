@@ -16,6 +16,8 @@ import { motion } from "motion/react";
 import projects, { Project } from "@/data/projects";
 import { SectionHeader } from "./section-header";
 import SectionWrapper from "../ui/section-wrapper";
+import { PlatformIcon } from "../ui/PlatformIcon";
+import { PlatformModal } from "../ui/PlatformModal";
 
 const categories = [
   { id: "all", label: "All" },
@@ -32,6 +34,7 @@ const getProjectDesc = (id: string) => {
   if (id === "pc-factory") return "Custom PC builder with live pricing, EMI calculator, and WhatsApp CTA. Built for a Chennai computer shop to get online orders.";
   if (id === "abc-builders") return "A premium business website for a construction firm in Madurai, featuring real-time project showcases, interactive design services, and direct WhatsApp consultations.";
   if (id === "mozhi-boutique") return "A customized e-commerce storefront for Mozhi Boutique, a Tamil Nadu ethnic fashion brand. Features an Amazon-style vertical product gallery with hover zoom, slide-out cart drawer, and live WhatsApp order integration.";
+  if (id === "budget-tracker") return "Smart personal finance tracker with expense categories, monthly reports, and Razorpay subscription billing. Available for Web, Android, and Windows.";
   return "";
 };
 
@@ -39,6 +42,7 @@ const getProjectMeta = (id: string) => {
   if (id === "pc-factory") return { val: 9999, yr: 2025 };
   if (id === "abc-builders") return { val: 18999, yr: 2025 };
   if (id === "mozhi-boutique") return { val: 9999, yr: 2025 };
+  if (id === "budget-tracker") return { val: 1499, yr: 2026 };
   return { val: 0, yr: 2026 };
 };
 
@@ -158,12 +162,14 @@ const ProjectsSection = () => {
 };
 
 const ProjectCard = ({ project }: { project: Project }) => {
+  const [isDownloadOpen, setIsDownloadOpen] = useState(false);
+
   return (
     <div className="flex items-center justify-center w-full h-full">
       <ResponsiveDialog>
         <ResponsiveDialogTrigger className="bg-transparent flex justify-center w-full focus:outline-none h-full">
           <div
-            className="relative w-full max-w-[400px] rounded-lg overflow-hidden cursor-pointer h-full"
+            className="relative w-full max-w-[400px] rounded-lg overflow-hidden cursor-pointer h-full border border-slate-200/50 dark:border-zinc-800/40"
             style={{ aspectRatio: "3/2" }}
           >
             <Image
@@ -174,6 +180,35 @@ const ProjectCard = ({ project }: { project: Project }) => {
               height={300}
               unoptimized={project.src.includes(".gif")}
             />
+
+            {/* Visual platform badges on top left */}
+            {project.platforms && project.platforms.length > 0 && (
+              <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 z-10">
+                {project.platforms.map((platform) => (
+                  <span
+                    key={platform.type}
+                    className={`flex items-center justify-center p-1.5 rounded-lg backdrop-blur-md shadow-sm border ${
+                      platform.available
+                        ? "bg-white/90 dark:bg-zinc-950/90 border-slate-200/60 dark:border-zinc-800/50 text-slate-800 dark:text-zinc-200"
+                        : "bg-white/50 dark:bg-zinc-950/50 border-slate-200/30 dark:border-zinc-800/30 text-slate-400 dark:text-zinc-500 opacity-60"
+                    }`}
+                    title={`${platform.label} ${platform.available ? "" : "(Coming Soon)"}`}
+                  >
+                    <PlatformIcon type={platform.type} size={13} />
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {/* Free Badge */}
+            {project.id === "budget-tracker" && (
+              <div className="absolute top-3 right-3 z-10">
+                <span className="bg-blue-600 text-white text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded shadow-sm">
+                  Free APK/.EXE
+                </span>
+              </div>
+            )}
+
             <div className="absolute w-full h-1/2 bottom-0 left-0 bg-gradient-to-t from-background via-background/85 to-transparent pointer-events-none">
               <div className="flex flex-col h-full items-start justify-end p-6">
                 <div className="text-lg text-left text-foreground font-display">{project.title}</div>
@@ -209,13 +244,26 @@ const ProjectCard = ({ project }: { project: Project }) => {
                     Source
                   </Link>
                 )}
-                {project.live && project.live !== "#" && (
-                  <Link href={project.live} target="_blank">
-                    <button className="group flex items-center gap-2 bg-primary text-primary-foreground text-sm font-medium px-4 py-1.5 rounded-full hover:bg-primary/80 transition-colors">
-                      Visit
-                      <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                    </button>
-                  </Link>
+                {project.platforms && project.platforms.length > 0 ? (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsDownloadOpen(true);
+                    }}
+                    className="group flex items-center gap-2 bg-primary text-primary-foreground text-sm font-medium px-4 py-1.5 rounded-full hover:bg-primary/80 transition-colors"
+                  >
+                    Get App
+                    <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </button>
+                ) : (
+                  project.live && project.live !== "#" && (
+                    <Link href={project.live} target="_blank">
+                      <button className="group flex items-center gap-2 bg-primary text-primary-foreground text-sm font-medium px-4 py-1.5 rounded-full hover:bg-primary/80 transition-colors">
+                        Visit
+                        <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      </button>
+                    </Link>
+                  )
                 )}
               </div>
             </div>
@@ -264,6 +312,14 @@ const ProjectCard = ({ project }: { project: Project }) => {
           </ScrollArea>
         </ResponsiveDialogContent>
       </ResponsiveDialog>
+
+      {project.platforms && project.platforms.length > 0 && (
+        <PlatformModal
+          project={project}
+          open={isDownloadOpen}
+          onOpenChange={setIsDownloadOpen}
+        />
+      )}
     </div>
   );
 };

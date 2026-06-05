@@ -1,6 +1,18 @@
-export type Section = "hero" | "about" | "skills" | "experience" | "projects" | "contact";
+export type Section = "hero" | "about" | "skills" | "experience" | "projects" | "contact" | "hidden";
 
 export const STATES = {
+  hidden: {
+    desktop: {
+      scale: { x: 0, y: 0, z: 0 },
+      position: { x: 0, y: -1000, z: 0 },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    mobile: {
+      scale: { x: 0, y: 0, z: 0 },
+      position: { x: 0, y: -1000, z: 0 },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+  },
   hero: {
     desktop: {
       scale: { x: 0.20, y: 0.20, z: 0.20 },

@@ -142,9 +142,11 @@ const AnimatedBackground = () => {
     gsap.set(kbd.position, heroState.position);
 
     // Section transitions
-    createSectionTimeline("#skills", "skills", "hero");
+    createSectionTimeline("#experience", "experience", "hero");
+    createSectionTimeline("#skills", "skills", "experience");
     createSectionTimeline("#projects", "projects", "skills", "top 70%");
-    createSectionTimeline("#contact", "contact", "projects", "top 30%");
+    createSectionTimeline("#services", "hidden", "projects", "top 70%");
+    createSectionTimeline("#contact", "contact", "hidden", "top 30%");
   };
 
   const getBongoAnimation = () => {

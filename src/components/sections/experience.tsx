@@ -75,7 +75,7 @@ const ExperienceCard = ({
           </div>
         </CardHeader>
         <CardContent className="space-y-6">
-          <ul className="list-disc list-outside ml-4 space-y-2 text-base text-muted-foreground leading-relaxed">
+          <ul className="list-disc list-outside ml-4 space-y-2 text-base text-slate-950 dark:text-slate-50 font-medium leading-relaxed">
             {experience.description.map((point, i) => (
               <li key={i}>{point}</li>
             ))}

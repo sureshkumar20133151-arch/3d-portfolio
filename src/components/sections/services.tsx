@@ -73,7 +73,7 @@ const ServicesSection = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="flex-1 flex flex-col justify-between gap-6">
-                <p className="text-base text-muted-foreground leading-relaxed">
+                <p className="text-base text-slate-950 dark:text-slate-50 font-medium leading-relaxed">
                   {service.description}
                 </p>
                 <div className="flex items-center justify-between border-t border-border/50 pt-4 mt-auto">

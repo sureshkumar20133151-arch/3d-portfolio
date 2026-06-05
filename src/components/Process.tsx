@@ -38,16 +38,18 @@ const Process = () => {
     <section id="process" className="py-20 px-4 bg-transparent">
       <style>{`
         @keyframes flow-line {
-          0% { background-position: -200% 0; }
-          100% { background-position: 200% 0; }
+          0% { left: -100%; }
+          100% { left: 100%; }
         }
-        .chasing-line {
-          background: linear-gradient(90deg, transparent, #3b82f6, #60a5fa, #3b82f6, transparent);
-          background-size: 200% 100%;
-          animation: flow-line 4s linear infinite;
+        .chasing-light {
+          position: absolute;
+          width: 50%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, #ffffff, transparent);
+          animation: flow-line 2s linear infinite;
         }
       `}</style>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-semibold text-gray-900 dark:text-white mb-3">
             How it works
@@ -57,15 +59,21 @@ const Process = () => {
           </p>
         </div>
         <div className="relative">
-          {/* Chasing light line for large desktop screen */}
-          <div className="absolute top-[48px] left-[10%] right-[10%] h-[2px] chasing-line opacity-60 hidden xl:block z-0" />
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {steps.map((step, i) => (
               <div 
                 key={i} 
-                className="relative flex flex-col items-center text-center p-6 rounded-xl border border-gray-200/50 dark:border-zinc-800/50 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-all duration-300 hover:scale-[1.02] shadow-sm hover:shadow-md z-10"
+                className="relative flex flex-col items-center text-center p-6 rounded-xl border border-gray-200/50 dark:border-zinc-800/50 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-all duration-300 hover:scale-[1.02] shadow-sm hover:shadow-md z-10 min-h-[200px]"
               >
+                {/* Horizontal Connector Line for 3-column layout */}
+                {((i === 0 || i === 1 || i === 3 || i === 4)) && (
+                  <div className="hidden lg:block absolute top-1/2 -right-[28px] w-8 h-[4px] -translate-y-1/2 z-20">
+                    <div className="w-full h-full bg-blue-500 rounded-full shadow-[0_0_8px_#3b82f6] relative overflow-hidden">
+                      <div className="chasing-light" />
+                    </div>
+                  </div>
+                )}
+                
                 <div className="w-12 h-12 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center text-base font-semibold shadow-md mb-4 relative z-20">
                   {i + 1}
                 </div>
@@ -75,7 +83,7 @@ const Process = () => {
                 <h3 className="text-base font-bold text-gray-900 dark:text-white mb-2">
                   {step.title}
                 </h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+                <p className="text-xs text-slate-950 dark:text-slate-50 font-medium leading-relaxed">
                   {step.description}
                 </p>
               </div>

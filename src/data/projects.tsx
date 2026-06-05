@@ -14,7 +14,52 @@ import {
 
 const BASE_PATH = "/assets/projects-screenshots";
 
-const ProjectsLinks = ({ live, repo }: { live: string; repo?: string }) => {
+const ProjectsLinks = ({
+  live,
+  repo,
+  platforms
+}: {
+  live: string;
+  repo?: string;
+  platforms?: Platform[];
+}) => {
+  if (platforms && platforms.length > 0) {
+    return (
+      <div className="flex flex-wrap items-center justify-start gap-3 my-3 mb-8">
+        {platforms.map((p, idx) => {
+          if (!p.available) return null;
+          return (
+            <Link
+              key={idx}
+              className="font-mono underline flex gap-2"
+              rel="noopener"
+              target="_new"
+              href={p.url}
+            >
+              <Button variant={"default"} size={"sm"} className="bg-blue-600 hover:bg-blue-700 text-white border-transparent">
+                {p.buttonLabel}
+                <ArrowUpRight className="ml-2 w-4 h-4" />
+              </Button>
+            </Link>
+          );
+        })}
+        {repo && repo !== "#" && (
+          <Link
+            className="font-mono underline flex gap-2"
+            rel="noopener"
+            target="_new"
+            href={repo}
+          >
+            <Button variant={"outline"} size={"sm"}>
+              Github
+              <ArrowUpRight className="ml-2 w-4 h-4" />
+            </Button>
+          </Link>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col md:flex-row items-center justify-start gap-3 my-3 mb-8">
       {live && live !== "#" && (
@@ -356,13 +401,7 @@ const projects: Project[] = [
           <TypographyP className="font-mono">
             A B2C SaaS budget tracker built for modern personal finance tracking. Supports multi-platform availability across browsers, Windows desktops, and Android mobile devices. Fully integrated with Razorpay subscription checkout.
           </TypographyP>
-          <ProjectsLinks live={this.live} repo={this.github} />
-          <SlideShow
-            images={[
-              `${BASE_PATH}/budget-tracker/hero-animation.gif?v=1`,
-              `${BASE_PATH}/budget-tracker/dashboard.png`,
-            ]}
-          />
+          <ProjectsLinks live={this.live} repo={this.github} platforms={this.platforms} />
           <TypographyH3 className="my-4 mt-8">Key Features</TypographyH3>
           <ul className="list-disc ml-6 font-mono mb-2">
             <li>Sleek, responsive dashboard with circular budget indicators.</li>

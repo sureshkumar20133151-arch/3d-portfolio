@@ -244,26 +244,13 @@ const ProjectCard = ({ project }: { project: Project }) => {
                     Source
                   </Link>
                 )}
-                {project.platforms && project.platforms.length > 0 ? (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsDownloadOpen(true);
-                    }}
-                    className="group flex items-center gap-2 bg-primary text-primary-foreground text-sm font-medium px-4 py-1.5 rounded-full hover:bg-primary/80 transition-colors"
-                  >
-                    Get App
-                    <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </button>
-                ) : (
-                  project.live && project.live !== "#" && (
-                    <Link href={project.live} target="_blank">
-                      <button className="group flex items-center gap-2 bg-primary text-primary-foreground text-sm font-medium px-4 py-1.5 rounded-full hover:bg-primary/80 transition-colors">
-                        Visit
-                        <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                      </button>
-                    </Link>
-                  )
+                {(!project.platforms || project.platforms.length === 0) && project.live && project.live !== "#" && (
+                  <Link href={project.live} target="_blank">
+                    <button className="group flex items-center gap-2 bg-primary text-primary-foreground text-sm font-medium px-4 py-1.5 rounded-full hover:bg-primary/80 transition-colors">
+                      Visit Website
+                      <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </button>
+                  </Link>
                 )}
               </div>
             </div>

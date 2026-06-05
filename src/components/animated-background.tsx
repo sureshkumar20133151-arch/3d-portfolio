@@ -35,10 +35,15 @@ const AnimatedBackground = () => {
   const [keyboardRevealed, setKeyboardRevealed] = useState(false);
   const router = useRouter();
 
+  const [autoplayActive, setAutoplayActive] = useState(true);
+  const autoplayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastKeycapHoverTimeRef = useRef<number>(0);
+  const autoplayIndexRef = useRef<number>(0);
+
   // --- Event Handlers ---
 
   const handleMouseHover = (e: SplineEvent) => {
-    if (!splineApp || selectedSkillRef.current?.name === e.target.name) return;
+    if (!splineApp) return;
 
     if (e.target.name === "body" || e.target.name === "platform") {
       if (selectedSkillRef.current) playReleaseSound();
@@ -48,15 +53,26 @@ const AnimatedBackground = () => {
         splineApp.setVariable("heading", "");
         splineApp.setVariable("desc", "");
       }
+      // Resume autoplay after 1.5 seconds of inactivity
+      if (autoplayTimeoutRef.current) clearTimeout(autoplayTimeoutRef.current);
+      autoplayTimeoutRef.current = setTimeout(() => {
+        setAutoplayActive(true);
+      }, 1500);
     } else {
-      if (!selectedSkillRef.current || selectedSkillRef.current.name !== e.target.name) {
-        const skill = SKILLS[e.target.name as SkillNames];
-        if (skill) {
+      const skill = SKILLS[e.target.name as SkillNames];
+      if (skill) {
+        lastKeycapHoverTimeRef.current = Date.now();
+        
+        if (selectedSkillRef.current?.name !== e.target.name) {
           if (selectedSkillRef.current) playReleaseSound();
           playPressSound();
           setSelectedSkill(skill);
           selectedSkillRef.current = skill;
         }
+        
+        // Pause autoplay since the user is hovering
+        if (autoplayTimeoutRef.current) clearTimeout(autoplayTimeoutRef.current);
+        setAutoplayActive(false);
       }
     }
   };
@@ -79,6 +95,11 @@ const AnimatedBackground = () => {
       playReleaseSound();
       splineApp.setVariable("heading", "");
       splineApp.setVariable("desc", "");
+      // Resume autoplay after 1.5 seconds of inactivity
+      if (autoplayTimeoutRef.current) clearTimeout(autoplayTimeoutRef.current);
+      autoplayTimeoutRef.current = setTimeout(() => {
+        setAutoplayActive(true);
+      }, 1500);
     });
     splineApp.addEventListener("keyDown", (e) => {
       if (!splineApp || isInputFocused()) return;
@@ -87,8 +108,12 @@ const AnimatedBackground = () => {
         playPressSound();
         setSelectedSkill(skill);
         selectedSkillRef.current = skill;
+        lastKeycapHoverTimeRef.current = Date.now();
         splineApp.setVariable("heading", skill.label);
         splineApp.setVariable("desc", skill.shortDescription);
+        // Pause autoplay since the user is interacting
+        if (autoplayTimeoutRef.current) clearTimeout(autoplayTimeoutRef.current);
+        setAutoplayActive(false);
       }
     });
     splineApp.addEventListener("mouseHover", handleMouseHover);
@@ -306,6 +331,100 @@ const AnimatedBackground = () => {
     }
 
   }, [splineApp, isMobile]);
+
+  // Reset selectedSkill when activeSection changes away from skills
+  useEffect(() => {
+    if (activeSection !== "skills") {
+      setSelectedSkill(null);
+    }
+  }, [activeSection]);
+
+  // Track user activity to manage autoplay
+  useEffect(() => {
+    if (activeSection !== "skills") return;
+
+    // Reset autoplay state to true on mount/enter
+    setAutoplayActive(true);
+
+    const handleWindowActivity = () => {
+      // If autoplay is paused (user was hovering a keycap), but they haven't hovered
+      // a keycap for 2.5 seconds, it means they moved their mouse to other HTML elements.
+      // Clear the hover state and resume autoplay.
+      if (!autoplayActive && selectedSkillRef.current && Date.now() - lastKeycapHoverTimeRef.current > 2500) {
+        setSelectedSkill(null);
+        selectedSkillRef.current = null;
+        setAutoplayActive(true);
+      }
+    };
+
+    window.addEventListener("mousemove", handleWindowActivity);
+    window.addEventListener("scroll", handleWindowActivity);
+    window.addEventListener("touchstart", handleWindowActivity);
+
+    return () => {
+      window.removeEventListener("mousemove", handleWindowActivity);
+      window.removeEventListener("scroll", handleWindowActivity);
+      window.removeEventListener("touchstart", handleWindowActivity);
+    };
+  }, [activeSection, autoplayActive]);
+
+  // Dispatch custom events for selectedSkill and autoplayActive state changes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("skill-selected", { detail: selectedSkill }));
+    }
+  }, [selectedSkill]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("skill-autoplay-state", { detail: autoplayActive }));
+    }
+  }, [autoplayActive]);
+
+  // Autoplay skills loop when activeSection is "skills" and user is inactive
+  useEffect(() => {
+    if (!splineApp || activeSection !== "skills" || !autoplayActive) return;
+
+    const skillList = Object.values(SKILLS);
+    let timer: NodeJS.Timeout;
+    let activeKeycap: any = null;
+
+    const cycleSkill = () => {
+      // If user is currently interacting, pause autoplay
+      if (selectedSkillRef.current) {
+        setAutoplayActive(false);
+        return;
+      }
+
+      // Reset previous keycap
+      if (activeKeycap) {
+        gsap.to(activeKeycap.position, { y: 0, duration: 0.3, ease: "power2.out" });
+        playReleaseSound();
+      }
+
+      const nextSkill = skillList[autoplayIndexRef.current];
+      setSelectedSkill(nextSkill);
+      
+      const keycap = splineApp.findObjectByName(nextSkill.name);
+      if (keycap) {
+        activeKeycap = keycap;
+        playPressSound();
+        gsap.to(keycap.position, { y: -20, duration: 0.25, ease: "power2.out" });
+      }
+
+      autoplayIndexRef.current = (autoplayIndexRef.current + 1) % skillList.length;
+      timer = setTimeout(cycleSkill, 3500);
+    };
+
+    timer = setTimeout(cycleSkill, 500);
+
+    return () => {
+      clearTimeout(timer);
+      if (activeKeycap) {
+        gsap.to(activeKeycap.position, { y: 0, duration: 0.3 });
+      }
+    };
+  }, [splineApp, activeSection, autoplayActive]);
 
   // Handle keyboard text visibility based on theme and section
   useEffect(() => {

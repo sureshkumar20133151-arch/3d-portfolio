@@ -1,6 +1,5 @@
 import React from "react";
 import { SectionHeader } from "./sections/section-header";
-import SectionWrapper from "./ui/section-wrapper";
 import RevealAnimation from "./reveal-animations";
 
 interface Testimonial {
@@ -51,7 +50,7 @@ const testimonialsData: Testimonial[] = [
 
 const Testimonials = () => {
   return (
-    <SectionWrapper id="testimonials" className="py-20 px-4 max-w-5xl mx-auto">
+    <section id="testimonials" className="py-20 px-4 max-w-5xl mx-auto z-10 relative bg-transparent">
       <SectionHeader
         id="testimonials"
         title={
@@ -104,7 +103,7 @@ const Testimonials = () => {
           );
         })}
       </div>
-    </SectionWrapper>
+    </section>
   );
 };
 

@@ -175,6 +175,7 @@ const AnimatedBackground = () => {
       { id: "#why", name: "why" as Section },
       { id: "#process", name: "process" as Section },
       { id: "#testimonials", name: "testimonials" as Section },
+      { id: "#faq", name: "faq" as Section },
       { id: "#contact", name: "contact" as Section },
     ];
 
@@ -566,7 +567,7 @@ const AnimatedBackground = () => {
 
   // Intersection Observer for reliable active section tracking
   useEffect(() => {
-    const sections = ["hero", "experience", "skills", "projects", "services", "why", "process", "testimonials", "contact"];
+    const sections = ["hero", "experience", "skills", "projects", "services", "why", "process", "testimonials", "faq", "contact"];
     const observers = sections.map((sectionId) => {
       const element = document.getElementById(sectionId);
       if (!element) return null;

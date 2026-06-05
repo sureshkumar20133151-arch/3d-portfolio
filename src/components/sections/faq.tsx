@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { SectionHeader } from "./section-header";
-import SectionWrapper from "../ui/section-wrapper";
 import { cn } from "@/lib/utils";
 
 interface FAQItem {
@@ -50,7 +49,7 @@ const FAQ = () => {
   };
 
   return (
-    <SectionWrapper id="faq" className="max-w-4xl mx-auto py-20 min-h-screen flex flex-col justify-center">
+    <section id="faq" className="max-w-4xl mx-auto py-20 min-h-screen flex flex-col justify-center z-10 relative bg-transparent">
       <SectionHeader
         id="faq"
         title={
@@ -108,7 +107,7 @@ const FAQ = () => {
           );
         })}
       </div>
-    </SectionWrapper>
+    </section>
   );
 };
 

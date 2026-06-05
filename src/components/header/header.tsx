@@ -11,6 +11,7 @@ import FunnyThemeToggle from "../theme/funny-theme-toggle";
 import { Button } from "../ui/button";
 import { config } from "@/data/config";
 import OnlineUsers from "../realtime/online-users";
+import { SiGithub, SiInstagram, SiLinkedin } from "react-icons/si";
 
 interface HeaderProps {
   loader?: boolean;
@@ -56,6 +57,36 @@ const Header = ({ loader }: HeaderProps) => {
         </Link>
 
         <div className="flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-3.5 mr-2">
+            <a
+              href="https://github.com/sureshkumar-dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white transition-colors"
+              aria-label="GitHub"
+            >
+              <SiGithub size={20} />
+            </a>
+            <a
+              href="https://linkedin.com/in/sureshkumar-dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white transition-colors"
+              aria-label="LinkedIn"
+            >
+              <SiLinkedin size={20} />
+            </a>
+            <a
+              href="https://instagram.com/uniqcraft"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white transition-colors"
+              aria-label="Instagram"
+            >
+              <SiInstagram size={20} />
+            </a>
+          </div>
+
           <a
             href="https://wa.me/919361599097"
             target="_blank"

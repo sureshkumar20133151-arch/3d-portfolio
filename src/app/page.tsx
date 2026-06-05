@@ -15,6 +15,7 @@ import HeroSection from "@/components/sections/hero";
 import WhyMe from "@/components/WhyMe";
 import Process from "@/components/Process";
 import Testimonials from "@/components/Testimonials";
+import FAQ from "@/components/sections/faq";
 
 function MainPage() {
   return (
@@ -29,6 +30,7 @@ function MainPage() {
         <WhyMe />
         <Process />
         <Testimonials />
+        <FAQ />
         <ContactSection />
       </main>
 

@@ -68,6 +68,13 @@ const HeroSection = () => {
                     </TooltipContent>
                   </Tooltip>
                 </BlurIn>
+                <BlurIn delay={1.1}>
+                  <div className="mt-4 flex justify-center md:justify-start">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-gray-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 text-slate-500 dark:text-zinc-400 text-xs md:text-sm font-medium leading-none">
+                      📍 Based in Madurai, Tamil Nadu — Serving India & UAE
+                    </span>
+                  </div>
+                </BlurIn>
                 {/* <div className="md:block hidden bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0 w-screen h-px animate-fade-right animate-glow" /> */}
                 <BlurIn delay={1.2}>
                   <p

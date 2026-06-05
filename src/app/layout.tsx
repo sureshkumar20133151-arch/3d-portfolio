@@ -10,13 +10,13 @@ import { Providers } from "@/components/providers";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata: Metadata = {
-  title: config.title,
-  description: config.description.long,
+  title: "Suresh Kumar | Web Developer & AI Builder — Madurai, Tamil Nadu",
+  description: "Suresh Kumar (UniqCraft) builds custom websites, e-commerce stores, AI tools and Chrome extensions for businesses in Madurai, Tamil Nadu and across India. Fixed price. 7-day delivery. 30-day free support.",
   keywords: config.keywords,
   authors: [{ name: config.author }],
   openGraph: {
-    title: config.title,
-    description: config.description.short,
+    title: "Suresh Kumar | Web Developer & AI Builder — Madurai, Tamil Nadu",
+    description: "Suresh Kumar (UniqCraft) builds custom websites, e-commerce stores, AI tools and Chrome extensions for businesses in Madurai, Tamil Nadu and across India. Fixed price. 7-day delivery. 30-day free support.",
     url: config.site,
     images: [
       {
@@ -30,8 +30,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: config.title,
-    description: config.description.short,
+    title: "Suresh Kumar | Web Developer & AI Builder — Madurai, Tamil Nadu",
+    description: "Suresh Kumar (UniqCraft) builds custom websites, e-commerce stores, AI tools and Chrome extensions for businesses in Madurai, Tamil Nadu and across India. Fixed price. 7-day delivery. 30-day free support.",
     images: [config.ogImg],
   },
   robots: {

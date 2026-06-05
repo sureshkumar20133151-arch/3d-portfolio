@@ -35,8 +35,19 @@ const steps = [
 
 const Process = () => {
   return (
-    <section id="process" className="py-20 px-4 bg-gray-50 dark:bg-zinc-950/20">
-      <div className="max-w-3xl mx-auto">
+    <section id="process" className="py-20 px-4 bg-transparent">
+      <style>{`
+        @keyframes flow-line {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+        .chasing-line {
+          background: linear-gradient(90deg, transparent, #3b82f6, #60a5fa, #3b82f6, transparent);
+          background-size: 200% 100%;
+          animation: flow-line 4s linear infinite;
+        }
+      `}</style>
+      <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-semibold text-gray-900 dark:text-white mb-3">
             How it works
@@ -46,24 +57,27 @@ const Process = () => {
           </p>
         </div>
         <div className="relative">
-          <div className="absolute left-6 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-800 md:left-1/2"></div>
-          <div className="space-y-8">
+          {/* Chasing light line for large desktop screen */}
+          <div className="absolute top-[48px] left-[10%] right-[10%] h-[2px] chasing-line opacity-60 hidden xl:block z-0" />
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
             {steps.map((step, i) => (
-              <div key={i} className="relative flex gap-6 md:gap-0">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-semibold z-10 md:mx-auto">
+              <div 
+                key={i} 
+                className="relative flex flex-col items-center text-center p-6 rounded-xl border border-gray-200/50 dark:border-zinc-800/50 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-all duration-300 hover:scale-[1.02] shadow-sm hover:shadow-md z-10"
+              >
+                <div className="w-12 h-12 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center text-base font-semibold shadow-md mb-4 relative z-20">
                   {i + 1}
                 </div>
-                <div className="flex-1 md:ml-8 pb-2">
-                  <span className="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wide">
-                    {step.day}
-                  </span>
-                  <h3 className="text-base font-semibold text-gray-900 dark:text-white mt-0.5 mb-1">
-                    {step.title}
-                  </h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
+                <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-1">
+                  {step.day}
+                </span>
+                <h3 className="text-base font-bold text-gray-900 dark:text-white mb-2">
+                  {step.title}
+                </h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+                  {step.description}
+                </p>
               </div>
             ))}
           </div>

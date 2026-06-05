@@ -21,7 +21,7 @@ const ExperienceSection = () => {
 
         <div className="flex flex-col gap-8 md:gap-12 relative">
           {/* Connector Line - simplified to a subtle border */}
-          <div className="absolute left-8 md:left-1/2 top-4 bottom-4 w-px bg-border hidden md:block -translate-x-1/2" />
+          {/* Connector Line removed to resolve gaps and keep layout clean */}
 
           {EXPERIENCE.map((exp, index) => (
             <div key={exp.id} className="relative">
@@ -54,8 +54,8 @@ const ExperienceCard = ({
     >
       <Card
         className={cn(
-          "bg-card text-card-foreground border-border",
-          "hover:border-primary/20 transition-colors duration-300",
+          "bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md border-gray-200/50 dark:border-zinc-800/50 text-card-foreground",
+          "hover:border-primary/40 transition-all duration-300 hover:scale-[1.01]",
           "shadow-sm hover:shadow-md"
         )}
       >

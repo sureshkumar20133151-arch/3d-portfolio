@@ -49,7 +49,7 @@ const WhyMe = () => {
           {reasons.map((reason, i) => (
             <div
               key={i}
-              className="p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 hover:border-blue-500 dark:hover:border-blue-500 transition-colors"
+              className="p-6 rounded-xl border border-gray-200/50 dark:border-zinc-800/50 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md hover:border-blue-500 dark:hover:border-blue-500 transition-all duration-300 hover:scale-[1.02] shadow-sm hover:shadow-md"
             >
               <div className="text-3xl mb-3">{reason.icon}</div>
               <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">

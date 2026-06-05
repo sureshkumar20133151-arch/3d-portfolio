@@ -141,12 +141,27 @@ const AnimatedBackground = () => {
     gsap.set(kbd.scale, heroState.scale);
     gsap.set(kbd.position, heroState.position);
 
-    // Section transitions
-    createSectionTimeline("#experience", "experience", "hero");
-    createSectionTimeline("#skills", "skills", "experience");
-    createSectionTimeline("#projects", "projects", "skills", "top 70%");
-    createSectionTimeline("#services", "hidden", "projects", "top 70%");
-    createSectionTimeline("#contact", "contact", "hidden", "top 30%");
+    // Dynamic timeline building based on elements actually present in the DOM
+    const sectionsToTrack = [
+      { id: "#experience", name: "experience" as Section },
+      { id: "#skills", name: "skills" as Section },
+      { id: "#projects", name: "projects" as Section },
+      { id: "#services", name: "services" as Section },
+      { id: "#why", name: "why" as Section },
+      { id: "#process", name: "process" as Section },
+      { id: "#testimonials", name: "testimonials" as Section },
+      { id: "#contact", name: "contact" as Section },
+    ];
+
+    const activeSections = sectionsToTrack.filter(
+      (sec) => document.querySelector(sec.id) !== null
+    );
+
+    activeSections.forEach((sec, idx) => {
+      const prevSection = idx === 0 ? "hero" : activeSections[idx - 1].name;
+      const start = sec.name === "contact" ? "top 30%" : sec.name === "projects" ? "top 70%" : "top 50%";
+      createSectionTimeline(sec.id, sec.name, prevSection, start);
+    });
   };
 
   const getBongoAnimation = () => {
@@ -429,7 +444,7 @@ const AnimatedBackground = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Spline
-        className="w-full h-full fixed"
+        className="w-full h-full fixed z-0"
         ref={splineContainer}
         onLoad={(app: Application) => {
           setSplineApp(app);

@@ -1,4 +1,4 @@
-export type Section = "hero" | "about" | "skills" | "experience" | "projects" | "contact" | "hidden";
+export type Section = "hero" | "about" | "skills" | "experience" | "projects" | "services" | "why" | "process" | "testimonials" | "contact" | "hidden";
 
 export const STATES = {
   hidden: {
@@ -86,6 +86,86 @@ export const STATES = {
     },
   },
   projects: {
+    desktop: {
+      scale: { x: 0.25, y: 0.25, z: 0.25 },
+      position: { x: 0, y: -200, z: 0 },
+      rotation: {
+        x: Math.PI,
+        y: Math.PI / 3,
+        z: Math.PI,
+      },
+    },
+    mobile: {
+      scale: { x: 0.3, y: 0.3, z: 0.3 },
+      position: { x: 0, y: 150, z: 0 },
+      rotation: {
+        x: Math.PI,
+        y: Math.PI / 3,
+        z: Math.PI,
+      },
+    },
+  },
+  services: {
+    desktop: {
+      scale: { x: 0.25, y: 0.25, z: 0.25 },
+      position: { x: 0, y: -200, z: 0 },
+      rotation: {
+        x: Math.PI,
+        y: Math.PI / 3,
+        z: Math.PI,
+      },
+    },
+    mobile: {
+      scale: { x: 0.3, y: 0.3, z: 0.3 },
+      position: { x: 0, y: 150, z: 0 },
+      rotation: {
+        x: Math.PI,
+        y: Math.PI / 3,
+        z: Math.PI,
+      },
+    },
+  },
+  why: {
+    desktop: {
+      scale: { x: 0.25, y: 0.25, z: 0.25 },
+      position: { x: 0, y: -200, z: 0 },
+      rotation: {
+        x: Math.PI,
+        y: Math.PI / 3,
+        z: Math.PI,
+      },
+    },
+    mobile: {
+      scale: { x: 0.3, y: 0.3, z: 0.3 },
+      position: { x: 0, y: 150, z: 0 },
+      rotation: {
+        x: Math.PI,
+        y: Math.PI / 3,
+        z: Math.PI,
+      },
+    },
+  },
+  process: {
+    desktop: {
+      scale: { x: 0.25, y: 0.25, z: 0.25 },
+      position: { x: 0, y: -200, z: 0 },
+      rotation: {
+        x: Math.PI,
+        y: Math.PI / 3,
+        z: Math.PI,
+      },
+    },
+    mobile: {
+      scale: { x: 0.3, y: 0.3, z: 0.3 },
+      position: { x: 0, y: 150, z: 0 },
+      rotation: {
+        x: Math.PI,
+        y: Math.PI / 3,
+        z: Math.PI,
+      },
+    },
+  },
+  testimonials: {
     desktop: {
       scale: { x: 0.25, y: 0.25, z: 0.25 },
       position: { x: 0, y: -200, z: 0 },

@@ -1,35 +1,50 @@
-import React from "react";
-import Link from "next/link";
-import { footer } from "./config";
-import { Button } from "../ui/button";
-import SocialMediaButtons from "../social/social-media-icons";
-import { config } from "@/data/config";
+import React from 'react';
 
-function Footer() {
-  const year = new Date().getFullYear();
+const Footer = () => {
   return (
-    <footer className="flex w-full shrink-0 flex-col items-center gap-2 border-t border-border px-4 py-6 sm:flex-row md:px-6 sm:justify-between">
-      <p className="text-xs text-gray-500 dark:text-gray-400">
-        © {year} {config.author}. All rights reserved.
-      </p>
-      <SocialMediaButtons />
-      <nav className="flex gap-4 sm:gap-6 z-10">
-        {footer.map((link, index) => {
-          const { title, href } = link;
+    <footer className="border-t border-gray-200 dark:border-gray-800 py-10 px-4 mt-10">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          
+          {/* Left — brand + location */}
+          <div className="text-center md:text-left">
+            <div className="font-semibold text-gray-900 dark:text-white">Suresh Kumar — UniqCraft</div>
+            <div className="text-sm text-gray-400 mt-1">📍 Madurai, Tamil Nadu, India</div>
+            <div className="text-sm text-gray-400">
+              <a href="mailto:dev.sureshkumar01@gmail.com" className="hover:text-blue-500 transition-colors">
+                dev.sureshkumar01@gmail.com
+              </a>
+            </div>
+          </div>
 
-          return (
-            <Link
-              className="text-xs underline-offset-4 hover:underline"
-              href={href}
-              key={`l_${index}`}
-            >
-              <Button variant={"link"}>{title}</Button>
-            </Link>
-          );
-        })}
-      </nav>
+          {/* Center — social links */}
+          <div className="flex items-center gap-4">
+            <a href="https://linkedin.com/in/solodevsuresh" target="_blank" rel="noopener noreferrer"
+               className="text-gray-400 hover:text-blue-600 transition-colors text-sm">
+              LinkedIn
+            </a>
+            <a href="https://github.com/solodevsuresh" target="_blank" rel="noopener noreferrer"
+               className="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors text-sm">
+              GitHub
+            </a>
+            <a href="https://instagram.com/solodevsuresh" target="_blank" rel="noopener noreferrer"
+               className="text-gray-400 hover:text-pink-500 transition-colors text-sm">
+              Instagram
+            </a>
+            <a href="https://wa.me/919361599097" target="_blank" rel="noopener noreferrer"
+               className="text-gray-400 hover:text-green-500 transition-colors text-sm">
+              WhatsApp
+            </a>
+          </div>
+
+          {/* Right — copyright */}
+          <div className="text-sm text-gray-400 text-center md:text-right">
+            © 2026 Suresh Kumar. All rights reserved.
+          </div>
+        </div>
+      </div>
     </footer>
   );
-}
+};
 
 export default Footer;

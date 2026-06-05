@@ -22,7 +22,7 @@ const config = {
     "Vercel",
     "Supabase"
   ],
-  author: "Suresh Kumar",
+  author: "Suresh Kumar — UniqCraft",
   email: "dev.sureshkumar01@gmail.com",
   site: "https://www.uniqcraft.in",
 

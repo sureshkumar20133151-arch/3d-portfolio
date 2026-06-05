@@ -79,6 +79,17 @@ const HeroSection = () => {
                     A Web Developer & AI Builder
                   </p>
                 </BlurIn>
+                <BlurIn delay={1.4}>
+                  <div className="flex flex-wrap items-center gap-3 mt-4 mb-6">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-sm font-medium">
+                      <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                      Available for new projects
+                    </span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">📍 Madurai, Tamil Nadu</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">🌍 UAE · Global Clients</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">★★★★★ 5.0 Rated</span>
+                  </div>
+                </BlurIn>
               </div>
               <div className="mt-8 flex flex-col gap-3 w-fit">
                 <Link
@@ -132,6 +143,25 @@ const HeroSection = () => {
                   </div>
                 </div>
               </div>
+              <BlurIn delay={2.2}>
+                <div className="grid grid-cols-3 gap-6 mt-10 pt-8 border-t border-gray-200 dark:border-gray-700 w-full max-w-md md:max-w-lg">
+                  <div className="text-center">
+                    <div className="text-2xl font-semibold text-gray-900 dark:text-white">8+</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Projects Built</div>
+                    <div className="text-xs text-gray-400 dark:text-gray-500">Across TN & Chennai</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-semibold text-gray-900 dark:text-white">7 days</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Avg. Delivery Time</div>
+                    <div className="text-xs text-gray-400 dark:text-gray-500">All projects on schedule</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-semibold text-gray-900 dark:text-white">30 days</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Free Post-Launch Support</div>
+                    <div className="text-xs text-gray-400 dark:text-gray-500">Every project, included</div>
+                  </div>
+                </div>
+              </BlurIn>
             </div>
           )}
         </div>

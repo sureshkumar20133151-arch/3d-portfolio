@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         url: config.ogImg,
         width: 800,
         height: 600,
-        alt: "Portfolio preview",
+        alt: "Suresh Kumar — Web Developer & AI Builder, Madurai",
       },
     ],
     type: "website",
@@ -56,6 +56,33 @@ export default function RootLayout({
           src={process.env.UMAMI_DOMAIN}
           data-website-id={process.env.UMAMI_SITE_ID}
         ></Script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Suresh Kumar",
+              "url": "https://www.uniqcraft.in",
+              "jobTitle": "Web Developer & AI Builder",
+              "worksFor": {
+                "@type": "Organization",
+                "name": "UniqCraft"
+              },
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Madurai",
+                "addressRegion": "Tamil Nadu",
+                "addressCountry": "IN"
+              },
+              "sameAs": [
+                "https://linkedin.com/in/solodevsuresh",
+                "https://github.com/solodevsuresh",
+                "https://instagram.com/solodevsuresh"
+              ]
+            })
+          }}
+        />
       </head>
       <body>
         <Providers>

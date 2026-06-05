@@ -22,6 +22,10 @@ const SkillsSection = () => {
 
     window.addEventListener("skill-selected", handleSkillSelected);
     window.addEventListener("skill-autoplay-state", handleAutoplayChanged);
+
+    // Request active skill details immediately on mount
+    window.dispatchEvent(new CustomEvent("request-active-skill"));
+
     return () => {
       window.removeEventListener("skill-selected", handleSkillSelected);
       window.removeEventListener("skill-autoplay-state", handleAutoplayChanged);

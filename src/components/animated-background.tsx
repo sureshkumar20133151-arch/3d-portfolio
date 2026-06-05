@@ -381,6 +381,19 @@ const AnimatedBackground = () => {
     }
   }, [autoplayActive]);
 
+  // Listen for request-active-skill from SkillsSection on mount to sync initial state
+  useEffect(() => {
+    const handleRequestActiveSkill = () => {
+      window.dispatchEvent(new CustomEvent("skill-selected", { detail: selectedSkill }));
+      window.dispatchEvent(new CustomEvent("skill-autoplay-state", { detail: autoplayActive }));
+    };
+
+    window.addEventListener("request-active-skill", handleRequestActiveSkill);
+    return () => {
+      window.removeEventListener("request-active-skill", handleRequestActiveSkill);
+    };
+  }, [selectedSkill, autoplayActive]);
+
   // Autoplay skills loop when activeSection is "skills" and user is inactive
   useEffect(() => {
     if (!splineApp || activeSection !== "skills" || !autoplayActive) return;
@@ -523,7 +536,7 @@ const AnimatedBackground = () => {
       }
 
       // Handle Bongo Cat
-      if (activeSection === "projects") {
+      if (activeSection === "projects" || activeSection === "services") {
         await sleep(300);
         bongoAnimationRef.current?.start();
       } else {
@@ -550,6 +563,35 @@ const AnimatedBackground = () => {
       teardownKeyboard?.kill();
     };
   }, [activeSection, splineApp]);
+
+  // Intersection Observer for reliable active section tracking
+  useEffect(() => {
+    const sections = ["hero", "experience", "skills", "projects", "services", "why", "process", "testimonials", "contact"];
+    const observers = sections.map((sectionId) => {
+      const element = document.getElementById(sectionId);
+      if (!element) return null;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActiveSection(sectionId as Section);
+          }
+        },
+        {
+          threshold: 0.25, // trigger when 25% of the section is visible
+          rootMargin: "-10% 0px -10% 0px"
+        }
+      );
+      observer.observe(element);
+      return { observer, element };
+    });
+
+    return () => {
+      observers.forEach((obs) => {
+        if (obs) obs.observer.unobserve(obs.element);
+      });
+    };
+  }, []);
 
   // Reveal keyboard on load/route change
   useEffect(() => {

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "motion/react";
-import { Globe, Palette, ShoppingCart, Brain, Cpu, MessageSquare } from "lucide-react";
+import { Globe, Palette, ShoppingCart, Brain, Cpu, MessageSquare, MonitorSmartphone } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { SectionHeader } from "./section-header";
@@ -10,18 +10,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const SERVICES_DATA = [
   {
-    id: 1,
-    title: "Business Website",
-    icon: <Globe className="w-8 h-8 text-blue-500" />,
-    description: "A professional online presence for your shop, clinic, agency, or brand — with WhatsApp CTAs, contact forms, Google Maps integration, and standard SEO. Customers find you and contact you directly.",
-    price: "₹9,999"
-  },
-  {
     id: 2,
     title: "Portfolio Website",
     icon: <Palette className="w-8 h-8 text-pink-500" />,
     description: "A personal showcase for freelancers, designers, developers, or agencies — display your projects, skills, and testimonials to attract high-paying clients worldwide with modern 3D or minimalist designs.",
     price: "₹8,999"
+  },
+  {
+    id: 1,
+    title: "Business Website",
+    icon: <Globe className="w-8 h-8 text-blue-500" />,
+    description: "A professional online presence for your shop, clinic, agency, or brand — with WhatsApp CTAs, contact forms, Google Maps integration, and standard SEO. Customers find you and contact you directly.",
+    price: "₹9,999"
   },
   {
     id: 3,
@@ -43,6 +43,13 @@ const SERVICES_DATA = [
     icon: <Cpu className="w-8 h-8 text-orange-500" />,
     description: "I connect your apps so they work automatically — form submitted → WhatsApp alert → Google Sheet → invoice sent. Create smart workflows using n8n/Zapier to save hours of manual work.",
     price: "₹14,999"
+  },
+  {
+    id: 6,
+    title: "Custom Software",
+    icon: <MonitorSmartphone className="w-8 h-8 text-teal-500" />,
+    description: "Tailored web, mobile, and desktop applications compiled for all platforms. Includes cross-platform deployment (Web app, Android APK, and Windows installer) with secure real-time cloud database sync.",
+    price: "₹29,999"
   }
 ];
 

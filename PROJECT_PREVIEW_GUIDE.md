@@ -189,6 +189,141 @@ if __name__ == "__main__":
 
 ---
 
+### Case C: Converting a Video Recording (.mp4) to GIF
+If you have a recorded MP4 demo video (e.g., from a screen recorder), use this Python script using `imageio` and `Pillow` to downsample the frame rate, resize the frame widths, and convert it to a lightweight GIF.
+
+#### Prerequisites:
+```bash
+pip install imageio pillow
+```
+
+#### Video to GIF Conversion Script (`convert_video.py`):
+```python
+import imageio.v3 as iio
+from PIL import Image
+import os
+
+video_path = r"path/to/your/recording.mp4"
+gif_path = r"public/assets/projects-screenshots/your-project-id/hero-animation.gif"
+
+print("Reading video frames...")
+frames = []
+
+for i, frame in enumerate(iio.imiter(video_path)):
+    # Downsample from 30fps to 15fps by selecting every second frame to save file size
+    if i % 2 == 0:
+        img = Image.fromarray(frame)
+        w, h = img.size
+        # Resize to 640px width max
+        new_w = 640
+        new_h = int(h * (new_w / w))
+        img_resized = img.resize((new_w, new_h), Image.Resampling.LANCZOS)
+        frames.append(img_resized)
+
+print(f"Loaded {len(frames)} frames. Writing GIF...")
+os.makedirs(os.path.dirname(gif_path), exist_ok=True)
+
+# Write looping GIF using Pillow
+frames[0].save(
+    gif_path,
+    save_all=True,
+    append_images=frames[1:],
+    duration=67,  # ~15 fps (1000ms / 15)
+    loop=0        # Infinite loop
+)
+
+print("GIF created successfully at:", gif_path)
+```
+
+---
+
+### Case D: Automated Local Interactive App Recording
+If the project is a local web application that requires interactive steps (e.g., logging in, typing form fields, clicking submit), use this script to automate local browser behaviors using **Playwright** and compile screenshot frames into an animated GIF.
+
+#### Prerequisites:
+```bash
+pip install playwright pillow
+playwright install chromium
+```
+
+#### Interactive Playwright Recorder Script (`record_interactive.py`):
+```python
+import os
+import asyncio
+from playwright.async_api import async_playwright
+from PIL import Image
+
+OUT_GIF_PATH = r"public/assets/projects-screenshots/your-project-id/hero-animation.gif"
+TEMP_DIR = r"public/assets/projects-screenshots/your-project-id/_temp_frames"
+os.makedirs(TEMP_DIR, exist_ok=True)
+
+async def record_app():
+    frames = []
+    frame_idx = 0
+    
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True)
+        # Mobile viewport aspect ratio
+        context = await browser.new_context(viewport={"width": 390, "height": 800})
+        page = await context.new_page()
+        
+        await page.goto("http://localhost:5173/#/dashboard", wait_until="networkidle")
+        await asyncio.sleep(2)
+        
+        async def capture_frame():
+            nonlocal frame_idx
+            fp = os.path.join(TEMP_DIR, f"frame_{frame_idx:04d}.png")
+            await page.screenshot(path=fp)
+            img = Image.open(fp)
+            w, h = img.size
+            if w > 450:
+                ratio = 450 / w
+                img = img.resize((450, int(h * ratio)), Image.Resampling.LANCZOS)
+            frames.append(img.convert("RGB"))
+            frame_idx += 1
+            os.remove(fp)
+            
+        # 1. Capture Dashboard scroll
+        for i in range(10):
+            await page.evaluate(f"window.scrollTo(0, {i * 35})")
+            await asyncio.sleep(0.08)
+            await capture_frame()
+            
+        # 2. Go to form and simulate step-by-step typing
+        await page.goto("http://localhost:5173/#/transactions")
+        await page.focus('input[id="description"]')
+        desc = "Coffee"
+        for char in desc:
+            await page.type('input[id="description"]', char, delay=100)
+            await capture_frame()
+            
+        # 3. Click Submit & Wait
+        await page.click('button:has-text("Add")')
+        await asyncio.sleep(0.5)
+        await capture_frame()
+        
+        await browser.close()
+        
+    if frames:
+        print(f"Compiling {len(frames)} frames into GIF...")
+        frames[0].save(
+            OUT_GIF_PATH,
+            save_all=True,
+            append_images=frames[1:],
+            duration=80, # 12.5 fps
+            loop=0,
+            optimize=True
+        )
+        print("GIF compiled successfully!")
+
+if __name__ == "__main__":
+    asyncio.run(record_app())
+    import shutil
+    shutil.rmtree(TEMP_DIR)
+```
+
+---
+
 ## ⚡ Step 3: Cache Busting
 Browsers aggressively cache animated GIFs. When updating a GIF under the same filename:
 1. Modify the URL parameter in `src/data/projects.tsx` (e.g. from `?v=1` to `?v=2`).

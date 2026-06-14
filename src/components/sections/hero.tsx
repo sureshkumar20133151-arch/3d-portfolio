@@ -109,7 +109,7 @@ const HeroSection = () => {
                   </Button>
                 </Link>
                 <Link href="#projects">
-                  <Button variant="outline" className="border border-zinc-700 hover:bg-zinc-800/50 text-white font-bold px-6 h-11 rounded-lg text-sm transition-all cursor-can-hover flex items-center gap-2">
+                  <Button variant="outline" className="border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 text-zinc-900 dark:text-white font-bold px-6 h-11 rounded-lg text-sm transition-all cursor-can-hover flex items-center gap-2">
                     ▶ View My Work
                   </Button>
                 </Link>

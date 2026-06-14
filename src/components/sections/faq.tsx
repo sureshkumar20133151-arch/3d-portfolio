@@ -64,11 +64,12 @@ const FAQ = () => {
         className="relative mb-12 md:mb-20 mt-0"
       />
 
-      <div className="mx-4 border-t border-gray-200/50 dark:border-zinc-800/50">
+      <div className="mx-4 p-6 md:p-8 rounded-2xl border border-gray-200/50 dark:border-zinc-800/50 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md shadow-sm">
         {faqData.map((faq, index) => {
           const isOpen = openIndex === index;
+          const isLast = index === faqData.length - 1;
           return (
-            <div key={index} className="border-b border-gray-200/50 dark:border-zinc-800/50">
+            <div key={index} className={cn(!isLast && "border-b border-gray-200/50 dark:border-zinc-800/50")}>
               <button
                 onClick={() => toggleFAQ(index)}
                 aria-expanded={isOpen}

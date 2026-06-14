@@ -128,7 +128,7 @@ export const STATES = {
   why: {
     desktop: {
       scale: { x: 0.25, y: 0.25, z: 0.25 },
-      position: { x: 0, y: -200, z: 0 },
+      position: { x: 0, y: -380, z: 0 },
       rotation: {
         x: Math.PI,
         y: Math.PI / 3,
@@ -148,7 +148,7 @@ export const STATES = {
   process: {
     desktop: {
       scale: { x: 0.25, y: 0.25, z: 0.25 },
-      position: { x: 0, y: -200, z: 0 },
+      position: { x: 0, y: -380, z: 0 },
       rotation: {
         x: Math.PI,
         y: Math.PI / 3,
@@ -168,7 +168,7 @@ export const STATES = {
   testimonials: {
     desktop: {
       scale: { x: 0.25, y: 0.25, z: 0.25 },
-      position: { x: 0, y: -200, z: 0 },
+      position: { x: 0, y: -380, z: 0 },
       rotation: {
         x: Math.PI,
         y: Math.PI / 3,
@@ -188,7 +188,7 @@ export const STATES = {
   faq: {
     desktop: {
       scale: { x: 0.25, y: 0.25, z: 0.25 },
-      position: { x: 0, y: -200, z: 0 },
+      position: { x: 0, y: -380, z: 0 },
       rotation: {
         x: Math.PI,
         y: Math.PI / 3,

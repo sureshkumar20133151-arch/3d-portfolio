@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { SectionHeader } from "./sections/section-header";
 import RevealAnimation from "./reveal-animations";
 import { motion } from "motion/react";
-import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { ChevronLeft, ChevronRight, Heart, MessageCircle, Send, Bookmark, MoreHorizontal } from "lucide-react";
 
 interface Testimonial {
   stars: number;
@@ -58,7 +58,9 @@ const Testimonials = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) {
+      if (window.innerWidth >= 1024) {
+        setItemsPerView(3);
+      } else if (window.innerWidth >= 768) {
         setItemsPerView(2);
       } else {
         setItemsPerView(1);
@@ -135,7 +137,9 @@ const Testimonials = () => {
             dragElastic={0.2}
             onDragEnd={handleDragEnd}
             animate={{
-              x: itemsPerView === 2
+              x: itemsPerView === 3
+                ? `calc(-${currentIndex} * (33.333% + 8px))`
+                : itemsPerView === 2
                 ? `calc(-${currentIndex} * (50% + 12px))`
                 : `calc(-${currentIndex} * (100% + 24px))`
             }}
@@ -145,43 +149,87 @@ const Testimonials = () => {
               damping: 22,
             }}
           >
-            {testimonialsData.map((t, index) => (
-              <div
-                key={index}
-                className="shrink-0 rounded-xl border border-gray-200/50 dark:border-zinc-800/50 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between p-6 md:p-8 select-none"
-                style={{
-                  width: itemsPerView === 2 ? "calc(50% - 12px)" : "100%",
-                }}
-              >
-                <div>
-                  <div className="flex justify-between items-start mb-4">
-                    {/* Star Rating */}
-                    <div className="flex gap-0.5">
-                      {Array.from({ length: t.stars }).map((_, j) => (
-                        <span key={j} className="text-yellow-400 text-sm">
-                          ★
+            {testimonialsData.map((t, index) => {
+              const username = t.name.toLowerCase().replace(/[^a-z0-9]/g, "") + "_";
+              return (
+                <div
+                  key={index}
+                  className="shrink-0 rounded-xl border border-gray-200/50 dark:border-zinc-800/50 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between p-5 select-none aspect-square"
+                  style={{
+                    width: itemsPerView === 3
+                      ? "calc(33.333% - 16px)"
+                      : itemsPerView === 2
+                      ? "calc(50% - 12px)"
+                      : "100%",
+                  }}
+                >
+                  {/* Instagram Post Header */}
+                  <div className="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-zinc-800/80">
+                    <div className="flex items-center gap-3">
+                      {/* Story Ring Avatar */}
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 via-red-500 to-purple-600 p-[2px] shrink-0">
+                        <div className="w-full h-full rounded-full bg-white dark:bg-zinc-900 p-[1px]">
+                          <div className="w-full h-full rounded-full bg-blue-100 dark:bg-zinc-800 flex items-center justify-center text-xs font-bold text-blue-600 dark:text-blue-400">
+                            {t.name.split(" ").map(n => n[0]).join("")}
+                          </div>
+                        </div>
+                      </div>
+                      {/* User Name & Location */}
+                      <div className="flex flex-col">
+                        <span className="text-sm font-bold text-gray-900 dark:text-white leading-none">
+                          {username}
                         </span>
-                      ))}
+                        <span className="text-xs text-blue-500 dark:text-blue-400 font-medium mt-1 cursor-can-hover leading-none">
+                          {t.location}
+                        </span>
+                      </div>
                     </div>
-                    {/* Decorative quote icon */}
-                    <Quote className="w-8 h-8 text-blue-500/10 dark:text-blue-400/10 shrink-0 pointer-events-none" />
+                    {/* Three dots icon */}
+                    <MoreHorizontal className="w-5 h-5 text-gray-400 dark:text-zinc-600 cursor-can-hover" />
                   </div>
-                  {/* Quote Text */}
-                  <p className="text-sm md:text-base italic text-slate-950 dark:text-slate-50 font-medium leading-relaxed mb-6">
-                    &ldquo;{t.quote}&rdquo;
-                  </p>
+
+                  {/* Post Content (The Testimonial Quote) */}
+                  <div className="flex-1 flex flex-col justify-center py-4 px-1">
+                    <p className="text-xs md:text-sm italic text-slate-950 dark:text-slate-50 font-medium leading-relaxed">
+                      &ldquo;{t.quote}&rdquo;
+                    </p>
+                  </div>
+
+                  {/* Instagram Post Footer */}
+                  <div className="pt-3 border-t border-gray-100 dark:border-zinc-800/80">
+                    {/* Actions Bar */}
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-3">
+                        <Heart className="w-5 h-5 text-red-500 fill-red-500 cursor-can-hover shrink-0" />
+                        <MessageCircle className="w-5 h-5 text-gray-700 dark:text-zinc-300 cursor-can-hover shrink-0" />
+                        <Send className="w-5 h-5 text-gray-700 dark:text-zinc-300 cursor-can-hover shrink-0" />
+                      </div>
+                      <Bookmark className="w-5 h-5 text-gray-700 dark:text-zinc-300 cursor-can-hover shrink-0" />
+                    </div>
+
+                    {/* Ratings as Likes */}
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <div className="flex gap-0.5 shrink-0">
+                        {Array.from({ length: t.stars }).map((_, j) => (
+                          <span key={j} className="text-yellow-400 text-xs">
+                            ★
+                          </span>
+                        ))}
+                      </div>
+                      <span className="text-[11px] font-bold text-gray-900 dark:text-white leading-none">
+                        5.0 rating
+                      </span>
+                    </div>
+
+                    {/* Caption */}
+                    <div className="text-[11px] text-gray-800 dark:text-zinc-200 line-clamp-1 leading-tight">
+                      <span className="font-bold mr-1.5">{username}</span>
+                      <span className="text-gray-500 dark:text-zinc-400">{t.business}</span>
+                    </div>
+                  </div>
                 </div>
-                {/* Author Details */}
-                <div className="border-t border-gray-100 dark:border-zinc-800/80 pt-4">
-                  <div className="text-sm font-bold text-gray-900 dark:text-white">
-                    {t.name}
-                  </div>
-                  <div className="text-xs text-gray-500 dark:text-zinc-400 mt-0.5">
-                    {t.business} &middot; <span className="text-blue-500 dark:text-blue-400 font-semibold">{t.location}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </motion.div>
         </div>
 

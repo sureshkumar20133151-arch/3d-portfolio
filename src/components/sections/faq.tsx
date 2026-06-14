@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { SectionHeader } from "./section-header";
 import { cn } from "@/lib/utils";
 
 interface FAQItem {
@@ -50,20 +49,18 @@ const FAQ = () => {
 
   return (
     <section id="faq" className="py-20 px-4 max-w-4xl mx-auto z-10 relative bg-transparent min-h-screen flex flex-col justify-center">
-      <div className="p-6 md:p-10 rounded-3xl border border-gray-200/50 dark:border-zinc-800/50 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md shadow-sm">
-        <SectionHeader
-          id="faq"
-          title={
-            <span className="flex flex-col items-center gap-2">
-              <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-widest">
-                ● FAQ
-              </span>
-              <span>Frequently Asked Questions</span>
-            </span>
-          }
-          desc="Everything you want to know before we start."
-          className="relative mb-8 mt-0"
-        />
+      <div className="p-6 md:p-10 rounded-3xl border border-gray-200/50 dark:border-zinc-800/50 bg-white/85 dark:bg-zinc-950/85 backdrop-blur-xl shadow-sm relative z-10">
+        <div className="text-center mb-8 flex flex-col items-center">
+          <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-widest block mb-2">
+            ● FAQ
+          </span>
+          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-3 tracking-tight">
+            Frequently Asked Questions
+          </h2>
+          <p className="mx-auto max-w-2xl text-sm md:text-base text-muted-foreground">
+            Everything you want to know before we start.
+          </p>
+        </div>
 
         <div className="border-t border-gray-200/50 dark:border-zinc-800/50 pt-2">
           {faqData.map((faq, index) => {

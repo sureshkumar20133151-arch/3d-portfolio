@@ -93,7 +93,7 @@ const Process = () => {
         <div className="text-center mt-12">
           <p className="text-gray-500 dark:text-gray-400 mb-4">Ready to get started?</p>
           <a
-            href="#contact"
+            href="#contact-get-free-quote"
             className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
           >
             Get your free quote →

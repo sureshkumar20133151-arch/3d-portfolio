@@ -88,7 +88,7 @@ const ServicesSection = () => {
                     <span className="text-xs text-muted-foreground uppercase tracking-widest">Starting at</span>
                     <span className="text-2xl font-extrabold text-foreground">{service.price}</span>
                   </div>
-                  <Link href="#contact">
+                  <Link href={`#contact-${service.title.toLowerCase().replace(/\s+/g, "-")}`}>
                     <Button size="sm" variant="outline" className="flex items-center gap-2">
                       <MessageSquare className="w-4 h-4" />
                       Get Quote

@@ -23,6 +23,10 @@ function isRateLimited(ip: string): boolean {
 const Email = z.object({
   fullName: z.string().min(2, "Full name is invalid!"),
   email: z.string().email({ message: "Email is invalid!" }),
+  whatsapp: z.string().optional(),
+  service: z.string().optional(),
+  budget: z.string().optional(),
+  timeline: z.string().optional(),
   message: z.string().min(10, "Message is too short!"),
 });
 export async function POST(req: Request) {
@@ -42,12 +46,16 @@ export async function POST(req: Request) {
       return Response.json({ error: zodError?.message }, { status: 400 });
 
     const { data: resendData, error: resendError } = await resend.emails.send({
-      from: "Porfolio <onboarding@resend.dev>",
+      from: "Portfolio <onboarding@resend.dev>",
       to: [config.email],
-      subject: "Contact me from portfolio",
+      subject: `New Lead: ${zodData.service || "Contact me"} from portfolio`,
       react: EmailTemplate({
         fullName: zodData.fullName,
         email: zodData.email,
+        whatsapp: zodData.whatsapp,
+        service: zodData.service,
+        budget: zodData.budget,
+        timeline: zodData.timeline,
         message: zodData.message,
       }) as React.ReactElement,
     });

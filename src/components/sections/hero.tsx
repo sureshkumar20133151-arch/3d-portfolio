@@ -71,7 +71,7 @@ const HeroSection = () => {
               <div>
                 <BlurIn delay={0.7}>
                   <div className="flex flex-col gap-2 md:gap-3 leading-none my-2">
-                    <h1 className="text-white text-5xl md:text-7xl font-extrabold tracking-tight">
+                    <h1 className="text-slate-900 dark:text-white text-5xl md:text-7xl font-extrabold tracking-tight">
                       I Build
                     </h1>
                     <h2 className="text-sky-400 text-xl md:text-3xl font-semibold italic min-h-[60px] md:min-h-[80px] leading-relaxed flex items-center flex-wrap font-serif">

@@ -118,7 +118,7 @@ const HeroSection = () => {
               <BlurIn delay={2.2}>
                 <div className="grid grid-cols-3 gap-6 mt-10 pt-8 border-t border-gray-200 dark:border-gray-700 w-full max-w-md md:max-w-lg">
                   <div className="text-center">
-                    <div className="text-2xl font-semibold text-gray-900 dark:text-white">8+</div>
+                    <div className="text-2xl font-semibold text-gray-900 dark:text-white">10+</div>
                     <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Projects Built</div>
                     <div className="text-xs text-gray-400 dark:text-gray-500">Across TN & Chennai</div>
                   </div>

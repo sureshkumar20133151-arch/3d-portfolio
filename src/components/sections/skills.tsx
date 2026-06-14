@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from "react";
 import SectionWrapper from "../ui/section-wrapper";
 import { SectionHeader } from "./section-header";
-import { Skill } from "@/data/constants";
+import { Skill, SKILLS, SkillNames } from "@/data/constants";
 import { motion, AnimatePresence } from "motion/react";
 
 const SkillsSection = () => {
-  const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
+  const [selectedSkill, setSelectedSkill] = useState<Skill | null>(SKILLS[SkillNames.REACT]);
   const [autoplayActive, setAutoplayActive] = useState(true);
 
   useEffect(() => {

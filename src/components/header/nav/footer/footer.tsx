@@ -1,6 +1,7 @@
 import styles from './style.module.scss';
 import { translate } from '../../anim';
 import { motion } from 'motion/react';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
@@ -46,8 +47,9 @@ export default function Footer() {
           initial="initial"
           animate="enter"
           exit="exit"
+          className="hover:text-blue-500 transition-colors"
         >
-          Blog
+          <Link href="#">Privacy Policy</Link>
         </motion.li>
         <motion.li
           custom={[0.3, 0]}
@@ -55,8 +57,9 @@ export default function Footer() {
           initial="initial"
           animate="enter"
           exit="exit"
+          className="hover:text-blue-500 transition-colors"
         >
-          Newsletter
+          <Link href="#">Terms & Conditions</Link>
         </motion.li>
       </ul>
     </div>

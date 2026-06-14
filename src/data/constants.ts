@@ -287,7 +287,7 @@ export const EXPERIENCE: Experience[] = [
       "Built custom websites, landing pages, and e-commerce stores for businesses across Tamil Nadu.",
       "Developed AI-powered tools including WhatsApp chatbots with Tamil NLP and product image generators.",
       "Created Chrome extensions for lead generation, business automation, and data scraping.",
-      "Delivered 5+ projects with average 7-day turnaround and 30-day free post-launch support.",
+      "Delivered 10+ projects with average 7-day turnaround and 30-day free post-launch support.",
     ],
     skills: [
       SkillNames.REACT,

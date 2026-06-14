@@ -21,11 +21,11 @@ const AnimatedBackground = () => {
   const isMobile = useMediaQuery("(max-width: 767px)");
   const splineContainer = useRef<HTMLDivElement>(null);
   const [splineApp, setSplineApp] = useState<Application>();
-  const selectedSkillRef = useRef<Skill | null>(null);
+  const selectedSkillRef = useRef<Skill | null>(SKILLS[SkillNames.REACT]);
 
   const { playPressSound, playReleaseSound } = useSounds();
 
-  const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
+  const [selectedSkill, setSelectedSkill] = useState<Skill | null>(SKILLS[SkillNames.REACT]);
   const [activeSection, setActiveSection] = useState<Section>("hero");
 
   // Animation controllers refs

@@ -176,9 +176,15 @@ const Testimonials = () => {
                       </div>
                       {/* User Name & Location */}
                       <div className="flex flex-col">
-                        <span className="text-sm font-bold text-gray-900 dark:text-white leading-none">
-                          {username}
-                        </span>
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-sm font-bold text-gray-900 dark:text-white leading-none">
+                            {username}
+                          </span>
+                          {/* Instagram Verified Rosette Checkmark */}
+                          <svg className="w-3.5 h-3.5 text-[#0095f6] fill-current shrink-0" viewBox="0 0 24 24" aria-label="Verified">
+                            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                          </svg>
+                        </div>
                         <span className="text-xs text-blue-500 dark:text-blue-400 font-medium mt-1 cursor-can-hover leading-none">
                           {t.location}
                         </span>
@@ -200,11 +206,11 @@ const Testimonials = () => {
                     {/* Actions Bar */}
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-3">
-                        <Heart className="w-5 h-5 text-red-500 fill-red-500 cursor-can-hover shrink-0" />
-                        <MessageCircle className="w-5 h-5 text-gray-700 dark:text-zinc-300 cursor-can-hover shrink-0" />
-                        <Send className="w-5 h-5 text-gray-700 dark:text-zinc-300 cursor-can-hover shrink-0" />
+                        <Heart className="w-[22px] h-[22px] text-red-500 fill-red-500 cursor-can-hover shrink-0" />
+                        <MessageCircle className="w-[22px] h-[22px] text-slate-900 dark:text-slate-100 cursor-can-hover shrink-0" />
+                        <Send className="w-[22px] h-[22px] text-slate-900 dark:text-slate-100 cursor-can-hover shrink-0" />
                       </div>
-                      <Bookmark className="w-5 h-5 text-gray-700 dark:text-zinc-300 cursor-can-hover shrink-0" />
+                      <Bookmark className="w-[22px] h-[22px] text-slate-900 dark:text-slate-100 cursor-can-hover shrink-0" />
                     </div>
 
                     {/* Ratings as Likes */}

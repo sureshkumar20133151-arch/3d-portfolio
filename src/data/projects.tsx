@@ -347,7 +347,7 @@ const projects: Project[] = [
   },
   {
     id: "budget-tracker",
-    category: "Web App / Mobile App",
+    category: "Web App / Mobile App / Windows App",
     title: "Budget Tracker",
     src: "/assets/projects-screenshots/budget-tracker/hero-animation.gif?v=4",
     screenshots: ["hero-animation.gif", "dashboard.png"],

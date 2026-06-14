@@ -24,7 +24,7 @@ const categories = [
   { id: "landing", label: "Landing Pages" },
   { id: "ecommerce", label: "E-Commerce" },
   { id: "business", label: "Business Sites" },
-  { id: "software", label: "Web App / Mobile App" },
+  { id: "software", label: "Web App / Mobile App / Windows App" },
   { id: "extension", label: "Chrome Extensions" },
   { id: "automation", label: "Automation" },
   { id: "ai", label: "AI Projects" },

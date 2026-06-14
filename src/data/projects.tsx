@@ -402,6 +402,12 @@ const projects: Project[] = [
             A B2C SaaS budget tracker built for modern personal finance tracking. Supports multi-platform availability across browsers, Windows desktops, and Android mobile devices. Fully integrated with Razorpay subscription checkout.
           </TypographyP>
           <ProjectsLinks live={this.live} repo={this.github} platforms={this.platforms} />
+          <SlideShow
+            images={[
+              `${BASE_PATH}/budget-tracker/hero-animation.gif?v=1`,
+              `${BASE_PATH}/budget-tracker/dashboard.png`,
+            ]}
+          />
           <TypographyH3 className="my-4 mt-8">Key Features</TypographyH3>
           <ul className="list-disc ml-6 font-mono mb-2">
             <li>Sleek, responsive dashboard with circular budget indicators.</li>

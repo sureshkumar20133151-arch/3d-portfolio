@@ -49,64 +49,66 @@ const FAQ = () => {
   };
 
   return (
-    <section id="faq" className="max-w-4xl mx-auto py-20 min-h-screen flex flex-col justify-center z-10 relative bg-transparent">
-      <SectionHeader
-        id="faq"
-        title={
-          <span className="flex flex-col items-center gap-2">
-            <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-widest">
-              ● FAQ
+    <section id="faq" className="py-20 px-4 max-w-4xl mx-auto z-10 relative bg-transparent min-h-screen flex flex-col justify-center">
+      <div className="p-6 md:p-10 rounded-3xl border border-gray-200/50 dark:border-zinc-800/50 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md shadow-sm">
+        <SectionHeader
+          id="faq"
+          title={
+            <span className="flex flex-col items-center gap-2">
+              <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-widest">
+                ● FAQ
+              </span>
+              <span>Frequently Asked Questions</span>
             </span>
-            <span>Frequently Asked Questions</span>
-          </span>
-        }
-        desc="Everything you want to know before we start."
-        className="relative mb-12 md:mb-20 mt-0"
-      />
+          }
+          desc="Everything you want to know before we start."
+          className="relative mb-8 mt-0"
+        />
 
-      <div className="mx-4 p-6 md:p-8 rounded-2xl border border-gray-200/50 dark:border-zinc-800/50 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md shadow-sm">
-        {faqData.map((faq, index) => {
-          const isOpen = openIndex === index;
-          const isLast = index === faqData.length - 1;
-          return (
-            <div key={index} className={cn(!isLast && "border-b border-gray-200/50 dark:border-zinc-800/50")}>
-              <button
-                onClick={() => toggleFAQ(index)}
-                aria-expanded={isOpen}
-                className="w-full flex items-center justify-between py-5 text-left font-semibold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors gap-4"
-              >
-                <span className="text-base md:text-lg">{faq.question}</span>
-                <span
-                  className={cn(
-                    "text-xl font-bold transition-colors select-none",
-                    isOpen ? "text-blue-600 dark:text-blue-400" : "text-gray-400 dark:text-zinc-600"
-                  )}
+        <div className="border-t border-gray-200/50 dark:border-zinc-800/50 pt-2">
+          {faqData.map((faq, index) => {
+            const isOpen = openIndex === index;
+            const isLast = index === faqData.length - 1;
+            return (
+              <div key={index} className={cn(!isLast && "border-b border-gray-200/50 dark:border-zinc-800/50")}>
+                <button
+                  onClick={() => toggleFAQ(index)}
+                  aria-expanded={isOpen}
+                  className="w-full flex items-center justify-between py-5 text-left font-semibold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors gap-4"
                 >
-                  {isOpen ? "−" : "+"}
-                </span>
-              </button>
-              <AnimatePresence initial={false}>
-                {isOpen && (
-                  <motion.div
-                    initial="collapsed"
-                    animate="open"
-                    exit="collapsed"
-                    variants={{
-                      open: { opacity: 1, height: "auto" },
-                      collapsed: { opacity: 0, height: 0 },
-                    }}
-                    transition={{ duration: 0.25, ease: "easeInOut" }}
-                    className="overflow-hidden"
+                  <span className="text-base md:text-lg">{faq.question}</span>
+                  <span
+                    className={cn(
+                      "text-xl font-bold transition-colors select-none",
+                      isOpen ? "text-blue-600 dark:text-blue-400" : "text-gray-400 dark:text-zinc-600"
+                    )}
                   >
-                    <p className="pb-5 text-sm md:text-base text-slate-950 dark:text-slate-50 font-medium leading-relaxed">
-                      {faq.answer}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          );
-        })}
+                    {isOpen ? "−" : "+"}
+                  </span>
+                </button>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial="collapsed"
+                      animate="open"
+                      exit="collapsed"
+                      variants={{
+                        open: { opacity: 1, height: "auto" },
+                        collapsed: { opacity: 0, height: 0 },
+                      }}
+                      transition={{ duration: 0.25, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <p className="pb-5 text-sm md:text-base text-slate-950 dark:text-slate-50 font-medium leading-relaxed">
+                        {faq.answer}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

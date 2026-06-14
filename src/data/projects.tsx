@@ -349,7 +349,7 @@ const projects: Project[] = [
     id: "budget-tracker",
     category: "Web App / Mobile App",
     title: "Budget Tracker",
-    src: "/assets/projects-screenshots/budget-tracker/hero-animation.gif?v=3",
+    src: "/assets/projects-screenshots/budget-tracker/hero-animation.gif?v=4",
     screenshots: ["hero-animation.gif", "dashboard.png"],
     skills: {
       frontend: [
@@ -404,7 +404,7 @@ const projects: Project[] = [
           <ProjectsLinks live={this.live} repo={this.github} platforms={this.platforms} />
           <SlideShow
             images={[
-              `${BASE_PATH}/budget-tracker/hero-animation.gif?v=3`,
+              `${BASE_PATH}/budget-tracker/hero-animation.gif?v=4`,
               `${BASE_PATH}/budget-tracker/dashboard.png`,
             ]}
           />

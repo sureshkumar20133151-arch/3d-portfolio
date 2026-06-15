@@ -63,7 +63,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Person",
               "name": "Suresh Kumar",
-              "url": "https://www.uniqcraft.in",
+              "url": "https://solodeveloper.pro",
               "jobTitle": "Web Developer & AI Builder",
               "worksFor": {
                 "@type": "Organization",

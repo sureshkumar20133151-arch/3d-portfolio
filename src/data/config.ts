@@ -24,7 +24,7 @@ const config = {
   ],
   author: "Suresh Kumar — UniqCraft",
   email: "dev.sureshkumar01@gmail.com",
-  site: "https://www.uniqcraft.in",
+  site: "https://solodeveloper.pro",
 
   get ogImg() {
     return this.site + "/assets/seo/og-image.png";

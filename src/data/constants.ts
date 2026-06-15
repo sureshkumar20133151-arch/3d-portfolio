@@ -282,7 +282,7 @@ export const EXPERIENCE: Experience[] = [
     startDate: "2024",
     endDate: "Present",
     title: "Freelance Web Developer & AI Builder",
-    company: "UniqCraft (Self-employed)",
+    company: "Solo Developer (Self-employed)",
     description: [
       "Built custom websites, landing pages, and e-commerce stores for businesses across Tamil Nadu.",
       "Developed AI-powered tools including WhatsApp chatbots with Tamil NLP and product image generators.",

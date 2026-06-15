@@ -7,7 +7,7 @@ const config = {
   },
   keywords: [
     "Suresh Kumar",
-    "UniqCraft",
+    "Solo Developer",
     "web developer Madurai",
     "website design Madurai",
     "SaaS developer Tamil Nadu",
@@ -22,7 +22,7 @@ const config = {
     "Vercel",
     "Supabase"
   ],
-  author: "Suresh Kumar — UniqCraft",
+  author: "Suresh Kumar — Solo Developer",
   email: "dev.sureshkumar01@gmail.com",
   site: "https://solodeveloper.pro",
 

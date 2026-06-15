@@ -11,12 +11,12 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata: Metadata = {
   title: "Suresh Kumar | Web Developer & AI Builder — Madurai, Tamil Nadu",
-  description: "Suresh Kumar (UniqCraft) builds custom websites, e-commerce stores, AI tools and Chrome extensions for businesses in Madurai, Tamil Nadu and across India. Fixed price. 7-day delivery. 30-day free support.",
+  description: "Suresh Kumar (Solo Developer) builds custom websites, e-commerce stores, AI tools and Chrome extensions for businesses in Madurai, Tamil Nadu and across India. Fixed price. 7-day delivery. 30-day free support.",
   keywords: config.keywords,
   authors: [{ name: config.author }],
   openGraph: {
     title: "Suresh Kumar | Web Developer & AI Builder — Madurai, Tamil Nadu",
-    description: "Suresh Kumar (UniqCraft) builds custom websites, e-commerce stores, AI tools and Chrome extensions for businesses in Madurai, Tamil Nadu and across India. Fixed price. 7-day delivery. 30-day free support.",
+    description: "Suresh Kumar (Solo Developer) builds custom websites, e-commerce stores, AI tools and Chrome extensions for businesses in Madurai, Tamil Nadu and across India. Fixed price. 7-day delivery. 30-day free support.",
     url: config.site,
     images: [
       {
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Suresh Kumar | Web Developer & AI Builder — Madurai, Tamil Nadu",
-    description: "Suresh Kumar (UniqCraft) builds custom websites, e-commerce stores, AI tools and Chrome extensions for businesses in Madurai, Tamil Nadu and across India. Fixed price. 7-day delivery. 30-day free support.",
+    description: "Suresh Kumar (Solo Developer) builds custom websites, e-commerce stores, AI tools and Chrome extensions for businesses in Madurai, Tamil Nadu and across India. Fixed price. 7-day delivery. 30-day free support.",
     images: [config.ogImg],
   },
   robots: {
@@ -67,7 +67,7 @@ export default function RootLayout({
               "jobTitle": "Web Developer & AI Builder",
               "worksFor": {
                 "@type": "Organization",
-                "name": "UniqCraft"
+                "name": "Solo Developer"
               },
               "address": {
                 "@type": "PostalAddress",

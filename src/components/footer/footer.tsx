@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="flex flex-col gap-4">
             <div>
               <span className="text-xl font-bold text-gray-900 dark:text-white">
-                UniqCraft
+                Solo Developer
               </span>
               <p className="text-sm text-gray-500 dark:text-zinc-400 mt-1">
                 Design. Build. Automate.
@@ -148,7 +148,7 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="border-t border-gray-200/50 dark:border-zinc-800/50 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-gray-400 dark:text-zinc-500 text-center sm:text-left">
-            &copy; 2026 Suresh Kumar &middot; UniqCraft. All rights reserved.
+            &copy; 2026 Suresh Kumar &middot; Solo Developer. All rights reserved.
           </p>
           <div className="flex items-center gap-4 text-xs text-gray-400 dark:text-zinc-500">
             <Link href="#" className="hover:text-blue-500 transition-colors">

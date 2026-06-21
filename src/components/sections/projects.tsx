@@ -35,6 +35,7 @@ const getProjectDesc = (id: string) => {
   if (id === "abc-builders") return "A premium business website for a construction firm in Madurai, featuring real-time project showcases, interactive design services, and direct WhatsApp consultations.";
   if (id === "mozhi-boutique") return "A customized e-commerce storefront for Mozhi Boutique, a Tamil Nadu ethnic fashion brand. Features an Amazon-style vertical product gallery with hover zoom, slide-out cart drawer, and live WhatsApp order integration.";
   if (id === "budget-tracker") return "Smart personal finance tracker with expense categories, monthly reports, and Razorpay subscription billing. Available for Web, Android, and Windows.";
+  if (id === "gmaps-extractor") return "Extract business leads from Google Maps (name, category, phone, website, rating, coordinates, etc.) and export directly to Excel or CSV instantly.";
   return "";
 };
 
@@ -43,6 +44,7 @@ const getProjectMeta = (id: string) => {
   if (id === "abc-builders") return { val: 18999, yr: 2025 };
   if (id === "mozhi-boutique") return { val: 9999, yr: 2025 };
   if (id === "budget-tracker") return { val: 1499, yr: 2026 };
+  if (id === "gmaps-extractor") return { val: 4999, yr: 2026 };
   return { val: 0, yr: 2026 };
 };
 

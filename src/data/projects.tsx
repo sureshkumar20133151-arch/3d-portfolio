@@ -419,6 +419,68 @@ const projects: Project[] = [
       );
     },
   },
+  {
+    id: "gmaps-extractor",
+    category: "Chrome Extension",
+    title: "GMaps Lead Extractor Pro",
+    src: "/assets/projects-screenshots/gmaps-extractor/hero.png",
+    screenshots: ["hero.png"],
+    skills: {
+      frontend: [
+        PROJECT_SKILLS.chrome,
+        PROJECT_SKILLS.js,
+      ],
+      backend: [
+        PROJECT_SKILLS.sheets,
+      ],
+    },
+    live: "/assets/gmaps-extractor-v4-fixed-upload.zip",
+    github: "#",
+    platforms: [
+      {
+        type: "chrome",
+        label: "Chrome Extension",
+        url: "/assets/gmaps-extractor-v4-fixed-upload.zip",
+        buttonLabel: "Download Extension ZIP",
+        available: true,
+      }
+    ],
+    get content() {
+      return (
+        <div>
+          <TypographyP className="font-mono text-2xl text-center">
+            Professional Google Maps Lead Generator
+          </TypographyP>
+          <TypographyP className="font-mono">
+            A high-performance Chrome Extension designed to scrape business leads directly from Google Maps search results. Extract business names, phone numbers, websites, full addresses, ratings, reviews, opening hours, and coordinates, and instantly download them as Excel or CSV files.
+          </TypographyP>
+          <ProjectsLinks live={this.live} repo={this.github} platforms={this.platforms} />
+          <SlideShow
+            images={[
+              `${BASE_PATH}/gmaps-extractor/hero.png`,
+            ]}
+          />
+          <TypographyH3 className="my-4 mt-8">Key Features</TypographyH3>
+          <ul className="list-disc ml-6 font-mono mb-2">
+            <li><strong>Interactive extraction options:</strong> Scrape the current open business, all visible search results, or auto-scroll to scrape hundreds of results at once.</li>
+            <li><strong>Deep Extraction Mode:</strong> Automatically clicks through each listing sequentially to extract deep data including phone numbers, websites, and complete addresses.</li>
+            <li><strong>Multiple Export Formats:</strong> Instant export to professionally formatted Excel (.xls) or CSV files, including separate columns for street, city, postal code, state, country, latitude, longitude, and opening status.</li>
+            <li><strong>Local Storage Tracking:</strong> Leads are saved in local storage, allowing you to resume scraping or export historical leads later.</li>
+          </ul>
+          <TypographyH3 className="my-4 mt-8">How to Install (Manual Developer Mode)</TypographyH3>
+          <ol className="list-decimal ml-6 font-mono mb-4 space-y-1">
+            <li>Download the extension ZIP file by clicking the **Download Extension ZIP** button above.</li>
+            <li>Unzip/extract the downloaded ZIP file to a folder on your computer.</li>
+            <li>Open Google Chrome and navigate to <code className="bg-muted px-1.5 py-0.5 rounded">chrome://extensions</code>.</li>
+            <li>Enable **Developer mode** using the toggle switch in the top-right corner.</li>
+            <li>Click the **Load unpacked** button in the top-left corner.</li>
+            <li>Select the folder you extracted in Step 2 (the folder that contains the <code className="bg-muted px-1.5 py-0.5 rounded">manifest.json</code> file).</li>
+            <li>Open Google Maps, perform any search, and open the extension popup to start extracting leads!</li>
+          </ol>
+        </div>
+      );
+    },
+  },
 ];
 
 export default projects;

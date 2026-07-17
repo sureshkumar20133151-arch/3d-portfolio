@@ -151,11 +151,11 @@ const Footer = () => {
             &copy; 2026 Suresh Kumar &middot; Solo Developer. All rights reserved.
           </p>
           <div className="flex items-center gap-4 text-xs text-gray-400 dark:text-zinc-500">
-            <Link href="#" className="hover:text-blue-500 transition-colors">
+            <Link href="/privacy" className="hover:text-blue-500 transition-colors">
               Privacy Policy
             </Link>
             <span>&middot;</span>
-            <Link href="#" className="hover:text-blue-500 transition-colors">
+            <Link href="/terms" className="hover:text-blue-500 transition-colors">
               Terms
             </Link>
           </div>

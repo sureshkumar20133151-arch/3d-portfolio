@@ -17,9 +17,12 @@ export const metadata: Metadata = {
   keywords: config.keywords,
   authors: [{ name: config.author }],
   icons: {
-    icon: "/icon.png",
-    shortcut: "/logo.png",
-    apple: "/logo.png",
+    icon: [
+      { url: "/favicon.ico?v=2" },
+      { url: "/icon.png?v=2", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico?v=2",
+    apple: "/apple-icon.png?v=2",
   },
   openGraph: {
     title: "Suresh Kumar | Web Developer & AI Builder — Madurai, Tamil Nadu",
@@ -57,6 +60,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="font-display font-sans" suppressHydrationWarning>
       <head>
+        <link rel="icon" href="/favicon.ico?v=2" sizes="any" />
+        <link rel="icon" href="/icon.png?v=2" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-icon.png?v=2" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Archivo+Black&display=swap" rel="stylesheet" />

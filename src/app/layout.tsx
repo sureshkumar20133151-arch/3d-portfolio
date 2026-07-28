@@ -11,6 +11,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(config.site),
   title: "Suresh Kumar | Web Developer & AI Builder — Madurai, Tamil Nadu",
   description: "Suresh Kumar (Solo Developer) builds custom websites, e-commerce stores, AI tools and Chrome extensions for businesses in Madurai, Tamil Nadu and across India. Fixed price. 7-day delivery. 30-day free support.",
   keywords: config.keywords,

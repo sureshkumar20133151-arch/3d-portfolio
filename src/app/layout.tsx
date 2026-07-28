@@ -15,25 +15,32 @@ export const metadata: Metadata = {
   description: "Suresh Kumar (Solo Developer) builds custom websites, e-commerce stores, AI tools and Chrome extensions for businesses in Madurai, Tamil Nadu and across India. Fixed price. 7-day delivery. 30-day free support.",
   keywords: config.keywords,
   authors: [{ name: config.author }],
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     title: "Suresh Kumar | Web Developer & AI Builder — Madurai, Tamil Nadu",
     description: "Suresh Kumar (Solo Developer) builds custom websites, e-commerce stores, AI tools and Chrome extensions for businesses in Madurai, Tamil Nadu and across India. Fixed price. 7-day delivery. 30-day free support.",
     url: config.site,
+    siteName: "Suresh Kumar — Solo Developer",
     images: [
       {
-        url: config.ogImg,
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Suresh Kumar — Web Developer & AI Builder, Madurai",
       },
     ],
+    locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Suresh Kumar | Web Developer & AI Builder — Madurai, Tamil Nadu",
     description: "Suresh Kumar (Solo Developer) builds custom websites, e-commerce stores, AI tools and Chrome extensions for businesses in Madurai, Tamil Nadu and across India. Fixed price. 7-day delivery. 30-day free support.",
-    images: [config.ogImg],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,

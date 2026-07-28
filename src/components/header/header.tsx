@@ -9,6 +9,7 @@ import Nav from "./nav";
 import { cn } from "@/lib/utils";
 import FunnyThemeToggle from "../theme/funny-theme-toggle";
 import { Button } from "../ui/button";
+import Image from "next/image";
 import { config } from "@/data/config";
 import OnlineUsers from "../realtime/online-users";
 import { SiGithub, SiInstagram, SiLinkedin } from "react-icons/si";
@@ -50,8 +51,16 @@ const Header = ({ loader }: HeaderProps) => {
       >
       </div> */}
       <div className={cn(styles.bar, "flex items-center justify-between")}>
-        <Link href="/" className={cn(styles.logoLink, "flex items-center justify-center")}>
-          <Button variant={"link"} className="text-md">
+        <Link href="/" className={cn(styles.logoLink, "flex items-center justify-center gap-2.5 hover:opacity-90 transition-opacity")}>
+          <Image
+            src="/logo.png"
+            alt="Logo"
+            width={38}
+            height={38}
+            priority
+            className="w-9 h-9 object-contain rounded-full border border-gray-200/20 shadow-sm"
+          />
+          <Button variant={"link"} className="text-md font-semibold text-slate-900 dark:text-white p-0">
             {config.author}
           </Button>
         </Link>

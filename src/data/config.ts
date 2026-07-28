@@ -27,7 +27,7 @@ const config = {
   site: "https://solodeveloper.pro",
 
   get ogImg() {
-    return this.site + "/assets/seo/og-image.png";
+    return "/og-image.png";
   },
   social: {
     twitter: "#",

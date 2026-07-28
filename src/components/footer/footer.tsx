@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { SiGithub, SiInstagram, SiLinkedin } from "react-icons/si";
 
 const Footer = () => {
@@ -9,13 +10,22 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Column 1 — Brand */}
           <div className="flex flex-col gap-4">
-            <div>
-              <span className="text-xl font-bold text-gray-900 dark:text-white">
-                Solo Developer
-              </span>
-              <p className="text-sm text-gray-500 dark:text-zinc-400 mt-1">
-                Design. Build. Automate.
-              </p>
+            <div className="flex items-center gap-3">
+              <Image
+                src="/logo.png"
+                alt="Logo"
+                width={40}
+                height={40}
+                className="w-10 h-10 object-contain rounded-full border border-gray-200/20 shadow-sm"
+              />
+              <div>
+                <span className="text-xl font-bold text-gray-900 dark:text-white block">
+                  Solo Developer
+                </span>
+                <p className="text-xs text-gray-500 dark:text-zinc-400 mt-0.5">
+                  Design. Build. Automate.
+                </p>
+              </div>
             </div>
             <div className="text-sm text-gray-500 dark:text-zinc-400 flex flex-col gap-1.5">
               <span>📍 Madurai, Tamil Nadu, India</span>

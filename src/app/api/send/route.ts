@@ -45,6 +45,31 @@ export async function POST(req: Request) {
     if (!zodSuccess)
       return Response.json({ error: zodError?.message }, { status: 400 });
 
+    // 1. Forward lead data to n8n Webhook (n8n -> Google Sheets -> Email -> WhatsApp / CRM)
+    const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL;
+    if (n8nWebhookUrl) {
+      try {
+        await fetch(n8nWebhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            fullName: zodData.fullName,
+            email: zodData.email,
+            whatsapp: zodData.whatsapp || "Not provided",
+            service: zodData.service || "Get Free Quote",
+            budget: zodData.budget || "Not specified",
+            timeline: zodData.timeline || "Not specified",
+            message: zodData.message,
+            submittedAt: new Date().toISOString(),
+            source: "Website Contact Form",
+          }),
+        });
+      } catch (webhookErr) {
+        console.error("n8n Webhook Forwarding Error:", webhookErr);
+      }
+    }
+
+    // 2. Send email via Resend
     const { data: resendData, error: resendError } = await resend.emails.send({
       from: "Portfolio <onboarding@resend.dev>",
       to: [config.email],
@@ -60,11 +85,11 @@ export async function POST(req: Request) {
       }) as React.ReactElement,
     });
 
-    if (resendError) {
+    if (resendError && !n8nWebhookUrl) {
       return Response.json({ error: "Failed to send email" }, { status: 500 });
     }
 
-    return Response.json(resendData);
+    return Response.json({ success: true, resendData });
   } catch (error) {
     return Response.json({ error }, { status: 500 });
   }

@@ -108,10 +108,27 @@ const ContactForm = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<FieldErrors>({});
 
-  const whatsapp = whatsappNumber.trim() ? `${countryCode} ${whatsappNumber.trim()}` : "";
+  const whatsapp = whatsappNumber.trim() ? `${countryCode} ${whatsappNumber.trim().replace(/^\+?\d{1,4}\s*/, "")}` : "";
 
   const { toast } = useToast();
   const router = useRouter();
+
+  // Smart phone input change handler to auto-detect country code and prevent duplicate +91
+  const handlePhoneChange = (inputVal: string) => {
+    let val = inputVal;
+    for (const c of countryCodes) {
+      if (val.startsWith(c.code)) {
+        setCountryCode(c.code);
+        val = val.substring(c.code.length).trim();
+        break;
+      }
+    }
+    if (val.startsWith("+")) {
+      val = val.replace(/^\+\d{1,4}\s*/, "").trim();
+    }
+    setWhatsappNumber(val);
+    setErrors((p) => ({ ...p, whatsapp: undefined }));
+  };
 
   // Listen for custom event trigger to auto-select service option
   useEffect(() => {
@@ -129,6 +146,10 @@ const ContactForm = () => {
   useEffect(() => {
     const checkHashAndScroll = () => {
       const hash = window.location.hash;
+      // Clean up duplicated hashes like #contact#contact
+      if (hash.includes("#contact#") || (hash.match(/#/g) || []).length > 1) {
+        window.history.replaceState(null, "", window.location.pathname + "#contact-form");
+      }
       if (hash && (hash.includes("contact") || hash.includes("get-free-quote"))) {
         const contactTarget = document.getElementById("contact-form") || document.getElementById("contact-get-free-quote") || document.getElementById("contact");
         if (contactTarget) {
@@ -380,11 +401,8 @@ const ContactForm = () => {
                     placeholder="98765 43210 (Optional)"
                     type="tel"
                     value={whatsappNumber}
-                    onInput={(e: any) => setWhatsappNumber(e.target.value)}
-                    onChange={(e) => {
-                      setWhatsappNumber(e.target.value);
-                      setErrors((p) => ({ ...p, whatsapp: undefined }));
-                    }}
+                    onInput={(e: any) => handlePhoneChange(e.target.value)}
+                    onChange={(e) => handlePhoneChange(e.target.value)}
                     className="flex-1"
                   />
                 </div>

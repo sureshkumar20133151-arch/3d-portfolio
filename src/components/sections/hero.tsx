@@ -60,7 +60,7 @@ const HeroSection = () => {
     const formElement = document.getElementById("contact-form") || document.getElementById("contact-get-free-quote") || document.getElementById("contact");
     if (formElement) {
       formElement.scrollIntoView({ behavior: "smooth", block: "start" });
-      window.history.pushState(null, "", "#contact-form");
+      window.history.replaceState(null, "", window.location.pathname + "#contact-form");
     }
   };
 

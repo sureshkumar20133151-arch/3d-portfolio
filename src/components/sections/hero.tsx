@@ -55,6 +55,15 @@ const HeroSection = () => {
     return () => clearTimeout(timer);
   }, [typedText, isDeleting, currentPhraseIdx]);
 
+  const handleQuoteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const formElement = document.getElementById("contact-form") || document.getElementById("contact-get-free-quote") || document.getElementById("contact");
+    if (formElement) {
+      formElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.history.pushState(null, "", "#contact-form");
+    }
+  };
+
   return (
     <SectionWrapper id="hero" className={cn("relative w-full h-screen")}>
       <div className="grid md:grid-cols-2">
@@ -103,11 +112,11 @@ const HeroSection = () => {
               </div>
 
               <div className="mt-6 flex flex-row items-center gap-3">
-                <Link href="#contact-get-free-quote">
+                <a href="#contact-form" onClick={handleQuoteClick}>
                   <Button className="bg-amber-500 hover:bg-amber-600 text-black font-extrabold px-6 h-11 rounded-lg text-sm transition-colors cursor-can-hover flex items-center gap-2">
                     GET FREE QUOTE &rarr;
                   </Button>
-                </Link>
+                </a>
                 <Link href="#projects">
                   <Button variant="outline" className="border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800/50 text-zinc-900 dark:text-white font-bold px-6 h-11 rounded-lg text-sm transition-all cursor-can-hover flex items-center gap-2">
                     ▶ View My Work

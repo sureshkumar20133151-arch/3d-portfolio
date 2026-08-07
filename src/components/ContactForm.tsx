@@ -80,17 +80,35 @@ const steps = [
   { id: 3, label: "CONFIRM" },
 ];
 
+const countryCodes = [
+  { code: "+91", label: "🇮🇳 India (+91)" },
+  { code: "+1", label: "🇺🇸 USA / Canada (+1)" },
+  { code: "+44", label: "🇬🇧 UK (+44)" },
+  { code: "+971", label: "🇦🇪 UAE (+971)" },
+  { code: "+966", label: "🇸🇦 Saudi Arabia (+966)" },
+  { code: "+974", label: "🇶🇦 Qatar (+974)" },
+  { code: "+65", label: "🇸🇬 Singapore (+65)" },
+  { code: "+60", label: "🇲🇾 Malaysia (+60)" },
+  { code: "+61", label: "🇦🇺 Australia (+61)" },
+  { code: "+49", label: "🇩🇪 Germany (+49)" },
+  { code: "+33", label: "🇫🇷 France (+33)" },
+  { code: "+81", label: "🇯🇵 Japan (+81)" },
+];
+
 const ContactForm = () => {
   const [step, setStep] = useState(1);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
-  const [whatsapp, setWhatsapp] = useState("");
+  const [countryCode, setCountryCode] = useState("+91");
+  const [whatsappNumber, setWhatsappNumber] = useState("");
   const [service, setService] = useState("Get Free Quote");
   const [budget, setBudget] = useState("");
   const [timeline, setTimeline] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<FieldErrors>({});
+
+  const whatsapp = whatsappNumber.trim() ? `${countryCode} ${whatsappNumber.trim()}` : "";
 
   const { toast } = useToast();
   const router = useRouter();
@@ -107,10 +125,16 @@ const ContactForm = () => {
     return () => window.removeEventListener("select-contact-service", handleServiceSelect);
   }, []);
 
-  // Listen for URL hash (e.g. #contact-portfolio-website) to auto-select service option
+  // Listen for URL hash (e.g. #contact-portfolio-website or #contact-form) to auto-scroll & auto-select service option
   useEffect(() => {
-    const checkHash = () => {
+    const checkHashAndScroll = () => {
       const hash = window.location.hash;
+      if (hash && (hash.includes("contact") || hash.includes("get-free-quote"))) {
+        const contactTarget = document.getElementById("contact-form") || document.getElementById("contact-get-free-quote") || document.getElementById("contact");
+        if (contactTarget) {
+          contactTarget.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
       if (hash.startsWith("#contact-")) {
         const decoded = decodeURIComponent(hash.substring(9)).replace(/-/g, " ");
         const match = [
@@ -132,21 +156,21 @@ const ContactForm = () => {
         }
       }
     };
-    checkHash();
-    window.addEventListener("hashchange", checkHash);
-    return () => window.removeEventListener("hashchange", checkHash);
+    checkHashAndScroll();
+    window.addEventListener("hashchange", checkHashAndScroll);
+    return () => window.removeEventListener("hashchange", checkHashAndScroll);
   }, []);
 
   const handleNextStep1 = () => {
     const tempErrors: FieldErrors = {};
-    if (!fullName.trim() || fullName.length < 2) {
+    if (!fullName.trim() || fullName.trim().length < 2) {
       tempErrors.fullName = "Full name must be at least 2 characters";
     }
-    if (!email.trim() || !/^\S+@\S+\.\S+$/.test(email)) {
+    if (!email.trim() || !/^\S+@\S+\.\S+$/.test(email.trim())) {
       tempErrors.email = "Please enter a valid email address";
     }
-    if (whatsapp && whatsapp.length < 10) {
-      tempErrors.whatsapp = "WhatsApp number must be at least 10 digits";
+    if (whatsappNumber.trim() && whatsappNumber.trim().replace(/\D/g, "").length < 5) {
+      tempErrors.whatsapp = "Please enter a valid phone number or leave blank";
     }
 
     if (Object.keys(tempErrors).length > 0) {
@@ -209,7 +233,7 @@ const ContactForm = () => {
       setLoading(false);
       setFullName("");
       setEmail("");
-      setWhatsapp("");
+      setWhatsappNumber("");
       setService("Get Free Quote");
       setBudget("");
       setTimeline("");
@@ -295,12 +319,15 @@ const ContactForm = () => {
               className="flex flex-col gap-4"
             >
               <LabelInputContainer>
-                <Label htmlFor="fullname">Full name</Label>
+                <Label htmlFor="fullname">Full name <span className="text-amber-500">*</span></Label>
                 <Input
                   id="fullname"
+                  name="fullName"
+                  autoComplete="name"
                   placeholder="Your Name"
                   type="text"
                   value={fullName}
+                  onInput={(e: any) => setFullName(e.target.value)}
                   onChange={(e) => {
                     setFullName(e.target.value);
                     setErrors((p) => ({ ...p, fullName: undefined }));
@@ -310,12 +337,15 @@ const ContactForm = () => {
               </LabelInputContainer>
 
               <LabelInputContainer>
-                <Label htmlFor="email">Email Address</Label>
+                <Label htmlFor="email">Email Address <span className="text-amber-500">*</span></Label>
                 <Input
                   id="email"
+                  name="email"
+                  autoComplete="email"
                   placeholder="you@example.com"
                   type="email"
                   value={email}
+                  onInput={(e: any) => setEmail(e.target.value)}
                   onChange={(e) => {
                     setEmail(e.target.value);
                     setErrors((p) => ({ ...p, email: undefined }));
@@ -325,17 +355,39 @@ const ContactForm = () => {
               </LabelInputContainer>
 
               <LabelInputContainer>
-                <Label htmlFor="whatsapp">WhatsApp Number (Optional)</Label>
-                <Input
-                  id="whatsapp"
-                  placeholder="+91 98765-43210"
-                  type="tel"
-                  value={whatsapp}
-                  onChange={(e) => {
-                    setWhatsapp(e.target.value);
-                    setErrors((p) => ({ ...p, whatsapp: undefined }));
-                  }}
-                />
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="whatsapp">WhatsApp Number</Label>
+                  <span className="text-xs text-gray-500 dark:text-zinc-400 font-semibold">(Optional)</span>
+                </div>
+                <div className="flex gap-2 w-full">
+                  <Select
+                    id="countryCode"
+                    aria-label="Country Code"
+                    value={countryCode}
+                    onChange={(e) => setCountryCode(e.target.value)}
+                    className="w-[125px] flex-shrink-0 text-xs md:text-sm font-semibold"
+                  >
+                    {countryCodes.map((c) => (
+                      <option key={c.code} value={c.code}>
+                        {c.label}
+                      </option>
+                    ))}
+                  </Select>
+                  <Input
+                    id="whatsapp"
+                    name="whatsapp"
+                    autoComplete="tel"
+                    placeholder="98765 43210 (Optional)"
+                    type="tel"
+                    value={whatsappNumber}
+                    onInput={(e: any) => setWhatsappNumber(e.target.value)}
+                    onChange={(e) => {
+                      setWhatsappNumber(e.target.value);
+                      setErrors((p) => ({ ...p, whatsapp: undefined }));
+                    }}
+                    className="flex-1"
+                  />
+                </div>
                 {errors.whatsapp && <p className="text-xs text-red-500 mt-1">{errors.whatsapp}</p>}
               </LabelInputContainer>
 

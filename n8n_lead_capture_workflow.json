@@ -4,7 +4,7 @@
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "website-lead",
+        "path": "9cd991ba-dcbe-45e4-8ece-bcf3eee57a48",
         "responseMode": "onReceived",
         "responseData": "allEntries",
         "options": {}

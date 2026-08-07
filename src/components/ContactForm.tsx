@@ -377,10 +377,7 @@ const ContactForm = () => {
               </LabelInputContainer>
 
               <LabelInputContainer>
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="whatsapp">Contact Number (WhatsApp)</Label>
-                  <span className="text-xs text-gray-500 dark:text-zinc-400 font-semibold">(Optional)</span>
-                </div>
+                <Label htmlFor="whatsapp">Contact Number (WhatsApp)</Label>
                 <div className="flex gap-2.5 w-full items-center">
                   <Select
                     id="countryCode"
@@ -401,7 +398,7 @@ const ContactForm = () => {
                       id="whatsapp"
                       name="whatsapp"
                       autoComplete="tel"
-                      placeholder="98765 43210 (Optional)"
+                      placeholder="98765 43210"
                       type="tel"
                       value={whatsappNumber}
                       onInput={(e: any) => handlePhoneChange(e.target.value)}

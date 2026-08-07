@@ -24,54 +24,55 @@ const formSchema = z.object({
 type FieldErrors = Partial<Record<keyof z.infer<typeof formSchema>, string>>;
 
 // Styled Select Dropdown matching Ace Input styles
-const Select = React.forwardRef<HTMLSelectElement, React.SelectHTMLAttributes<HTMLSelectElement>>(
-  ({ className, children, ...props }, ref) => {
-    const radius = 100;
-    const [visible, setVisible] = React.useState(false);
-    let mouseX = useMotionValue(0);
-    let mouseY = useMotionValue(0);
+const Select = React.forwardRef<
+  HTMLSelectElement,
+  React.SelectHTMLAttributes<HTMLSelectElement> & { containerClassName?: string }
+>(({ className, containerClassName, children, ...props }, ref) => {
+  const radius = 100;
+  const [visible, setVisible] = React.useState(false);
+  let mouseX = useMotionValue(0);
+  let mouseY = useMotionValue(0);
 
-    function handleMouseMove({ currentTarget, clientX, clientY }: any) {
-      let { left, top } = currentTarget.getBoundingClientRect();
-      mouseX.set(clientX - left);
-      mouseY.set(clientY - top);
-    }
-
-    return (
-      <motion.div
-        style={{
-          background: useMotionTemplate`
-        radial-gradient(
-          ${visible ? radius + "px" : "0px"} circle at ${mouseX}px ${mouseY}px,
-          var(--brand),
-          transparent 80%
-        )
-      `,
-        }}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setVisible(true)}
-        onMouseLeave={() => setVisible(false)}
-        className="p-[2px] rounded-lg transition duration-300 group/input w-full"
-      >
-        <select
-          className={cn(
-            `flex h-10 w-full border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 text-sm
-          focus-visible:outline-none focus-visible:ring-[2px] focus-visible:ring-brand dark:focus-visible:ring-brand
-           disabled:cursor-not-allowed disabled:opacity-50
-           dark:shadow-[0px_0px_1px_1px_var(--neutral-700)]
-           group-hover/input:shadow-none transition duration-400 cursor-pointer
-           `,
-            className
-          )}
-          ref={ref}
-          {...props}
-        >
-          {children}
-        </select>
-      </motion.div>
-    );
+  function handleMouseMove({ currentTarget, clientX, clientY }: any) {
+    let { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
   }
-);
+
+  return (
+    <motion.div
+      style={{
+        background: useMotionTemplate`
+      radial-gradient(
+        ${visible ? radius + "px" : "0px"} circle at ${mouseX}px ${mouseY}px,
+        var(--brand),
+        transparent 80%
+      )
+    `,
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setVisible(true)}
+      onMouseLeave={() => setVisible(false)}
+      className={cn("p-[2px] rounded-lg transition duration-300 group/input w-full", containerClassName)}
+    >
+      <select
+        className={cn(
+          `flex h-10 w-full border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 text-sm
+        focus-visible:outline-none focus-visible:ring-[2px] focus-visible:ring-brand dark:focus-visible:ring-brand
+         disabled:cursor-not-allowed disabled:opacity-50
+         dark:shadow-[0px_0px_1px_1px_var(--neutral-700)]
+         group-hover/input:shadow-none transition duration-400 cursor-pointer
+         `,
+          className
+        )}
+        ref={ref}
+        {...props}
+      >
+        {children}
+      </select>
+    </motion.div>
+  );
+});
 Select.displayName = "Select";
 
 const steps = [
@@ -380,13 +381,14 @@ const ContactForm = () => {
                   <Label htmlFor="whatsapp">Contact Number (WhatsApp)</Label>
                   <span className="text-xs text-gray-500 dark:text-zinc-400 font-semibold">(Optional)</span>
                 </div>
-                <div className="flex gap-2 w-full">
+                <div className="flex gap-2.5 w-full items-center">
                   <Select
                     id="countryCode"
                     aria-label="Country Code"
                     value={countryCode}
                     onChange={(e) => setCountryCode(e.target.value)}
-                    className="w-[125px] flex-shrink-0 text-xs md:text-sm font-semibold"
+                    containerClassName="w-[140px] flex-shrink-0"
+                    className="w-full text-xs md:text-sm font-semibold"
                   >
                     {countryCodes.map((c) => (
                       <option key={c.code} value={c.code}>
@@ -394,17 +396,19 @@ const ContactForm = () => {
                       </option>
                     ))}
                   </Select>
-                  <Input
-                    id="whatsapp"
-                    name="whatsapp"
-                    autoComplete="tel"
-                    placeholder="98765 43210 (Optional)"
-                    type="tel"
-                    value={whatsappNumber}
-                    onInput={(e: any) => handlePhoneChange(e.target.value)}
-                    onChange={(e) => handlePhoneChange(e.target.value)}
-                    className="flex-1"
-                  />
+                  <div className="flex-1 w-full">
+                    <Input
+                      id="whatsapp"
+                      name="whatsapp"
+                      autoComplete="tel"
+                      placeholder="98765 43210 (Optional)"
+                      type="tel"
+                      value={whatsappNumber}
+                      onInput={(e: any) => handlePhoneChange(e.target.value)}
+                      onChange={(e) => handlePhoneChange(e.target.value)}
+                      className="w-full"
+                    />
+                  </div>
                 </div>
                 {errors.whatsapp && <p className="text-xs text-red-500 mt-1">{errors.whatsapp}</p>}
               </LabelInputContainer>

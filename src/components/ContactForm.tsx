@@ -377,7 +377,7 @@ const ContactForm = () => {
 
               <LabelInputContainer>
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="whatsapp">WhatsApp Number</Label>
+                  <Label htmlFor="whatsapp">Contact Number (WhatsApp)</Label>
                   <span className="text-xs text-gray-500 dark:text-zinc-400 font-semibold">(Optional)</span>
                 </div>
                 <div className="flex gap-2 w-full">

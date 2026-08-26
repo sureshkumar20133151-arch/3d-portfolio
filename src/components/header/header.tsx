@@ -28,7 +28,7 @@ const Header = ({ loader }: HeaderProps) => {
         "transition-colors delay-100 duration-500 ease-in z-[1000]"
       )}
       style={{
-        background: isActive ? "hsl(var(--background) / .8)" : "transparent",
+        background: isActive ? "hsl(var(--background) / .95)" : "hsl(var(--background) / .8)",
         // backgroundImage:
         //   "linear-gradient(0deg, rgba(0, 0, 0, 0), rgb(0, 0, 0))",
       }}

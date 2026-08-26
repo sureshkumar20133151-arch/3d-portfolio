@@ -102,7 +102,9 @@ export default function RootLayout({
       <body>
         <Providers>
           <Header />
-          {children}
+          <main className="pt-[68px]">
+            {children}
+          </main>
           <Footer />
           <AppOverlays />
         </Providers>

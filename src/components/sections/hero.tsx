@@ -72,7 +72,7 @@ const HeroSection = () => {
             "h-[calc(100dvh-3rem)] md:h-[calc(100dvh-4rem)] z-[2]",
             "col-span-1",
             "flex flex-col justify-start md:justify-center items-center md:items-start",
-            "pt-36 sm:pt-36 sm:pb-16 md:p-20 lg:p-24 xl:p-28"
+            "pt-48 sm:pt-44 sm:pb-16 md:p-20 lg:p-24 xl:p-28"
           )}
         >
           {!isLoading && (
@@ -83,9 +83,8 @@ const HeroSection = () => {
                     <h1 className="text-slate-900 dark:text-white text-5xl md:text-7xl font-extrabold tracking-tight">
                       I Build
                     </h1>
-                    <h2 className="text-sky-400 text-xl md:text-3xl font-semibold italic min-h-[60px] md:min-h-[80px] leading-relaxed flex items-center flex-wrap font-serif">
-                      {typedText}
-                      <span className="inline-block w-[3px] h-[0.8em] bg-sky-400 ml-1.5 rounded-sm animate-pulse" />
+                    <h2 className="text-sky-400 text-xl md:text-3xl font-semibold italic min-h-[60px] md:min-h-[80px] leading-relaxed font-serif block">
+                      {typedText}<span className="inline-block w-[3px] h-[0.8em] bg-sky-400 ml-1.5 rounded-sm animate-pulse align-middle" />
                     </h2>
                   </div>
                 </BlurIn>

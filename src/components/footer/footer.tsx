@@ -47,7 +47,7 @@ const Footer = () => {
                 <SiGithub size={20} />
               </a>
               <a
-                href="https://linkedin.com/in/sureshkumar-dev"
+                href="https://www.linkedin.com/in/suresh-kumar3151/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
@@ -56,7 +56,7 @@ const Footer = () => {
                 <SiLinkedin size={20} />
               </a>
               <a
-                href="https://instagram.com/uniqcraft"
+                href="https://www.instagram.com/solodeveloper_suresh/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"

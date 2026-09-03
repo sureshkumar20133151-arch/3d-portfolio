@@ -31,8 +31,8 @@ const config = {
   },
   social: {
     twitter: "#",
-    linkedin: "https://linkedin.com/in/suresh-uniqcraft",
-    instagram: "#",
+    linkedin: "https://www.linkedin.com/in/suresh-kumar3151/",
+    instagram: "https://www.instagram.com/solodeveloper_suresh/",
     facebook: "#",
   },
 };

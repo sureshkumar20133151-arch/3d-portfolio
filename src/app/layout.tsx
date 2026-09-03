@@ -91,9 +91,9 @@ export default function RootLayout({
                 "addressCountry": "IN"
               },
               "sameAs": [
-                "https://linkedin.com/in/solodevsuresh",
+                "https://www.linkedin.com/in/suresh-kumar3151/",
                 "https://github.com/solodevsuresh",
-                "https://instagram.com/solodevsuresh"
+                "https://www.instagram.com/solodeveloper_suresh/"
               ]
             })
           }}

@@ -92,7 +92,7 @@ export default function RootLayout({
               },
               "sameAs": [
                 "https://www.linkedin.com/in/suresh-kumar3151/",
-                "https://github.com/solodevsuresh",
+                "https://github.com/sureshkumar20133151-arch",
                 "https://www.instagram.com/solodeveloper_suresh/"
               ]
             })

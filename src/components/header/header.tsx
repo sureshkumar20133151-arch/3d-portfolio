@@ -68,7 +68,7 @@ const Header = ({ loader }: HeaderProps) => {
         <div className="flex items-center gap-3">
           <div className="hidden md:flex items-center gap-3.5 mr-2">
             <a
-              href="https://github.com/sureshkumar-dev"
+              href="https://github.com/sureshkumar20133151-arch"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-white transition-colors"

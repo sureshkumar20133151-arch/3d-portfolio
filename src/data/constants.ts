@@ -173,7 +173,7 @@ export const SKILLS: Record<SkillNames, Skill> = {
     label: "Google Antigravity",
     shortDescription: "Advanced Agentic AI Coding Assistant platform designed by Google DeepMind.",
     color: "#4285f4",
-    icon: "https://avatars.githubusercontent.com/u/128362638?s=48",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg",
   },
   [SkillNames.CLAUDE]: {
     id: 22,
@@ -181,7 +181,7 @@ export const SKILLS: Record<SkillNames, Skill> = {
     label: "Claude AI",
     shortDescription: "State-of-the-art AI model by Anthropic for intelligent reasoning, code generation, and automation.",
     color: "#d97757",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/claude/claude-original.svg",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/7/70/Claude_AI_logo.svg",
   },
   [SkillNames.DOCKER]: {
     id: 23,

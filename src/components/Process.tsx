@@ -55,7 +55,7 @@ const Process = () => {
             How it works
           </h2>
           <p className="text-gray-500 dark:text-gray-400">
-            From first message to live website — here's exactly what happens.
+            From first message to live website — here&apos;s exactly what happens.
           </p>
         </div>
         <div className="relative">

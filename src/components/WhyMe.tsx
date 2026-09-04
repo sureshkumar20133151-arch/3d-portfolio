@@ -42,7 +42,7 @@ const WhyMe = () => {
             Why choose me?
           </h2>
           <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
-            Hundreds of developers out there. Here's what makes working with me different.
+            Hundreds of developers out there. Here&apos;s what makes working with me different.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

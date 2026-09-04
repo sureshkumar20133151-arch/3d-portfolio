@@ -31,10 +31,10 @@ export const metadata: Metadata = {
     siteName: "Suresh Kumar — Solo Developer",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-image.png?v=2",
         width: 1200,
         height: 630,
-        alt: "Suresh Kumar — Web Developer & AI Builder, Madurai",
+        alt: "Suresh Kumar — Web Developer & AI Builder",
       },
     ],
     locale: "en_US",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Suresh Kumar | Web Developer & AI Builder — Madurai, Tamil Nadu",
     description: "Suresh Kumar (Solo Developer) builds custom websites, e-commerce stores, AI tools and Chrome extensions for businesses in Madurai, Tamil Nadu and across India. Fixed price. 7-day delivery. 30-day free support.",
-    images: ["/og-image.png"],
+    images: ["/og-image.png?v=2"],
   },
   robots: {
     index: true,

@@ -97,16 +97,23 @@ export default function FloatingChatWidget() {
   ];
 
   const formatText = (content: string) => {
-    // Basic formatting for **bold** or *italic*
-    const parts = content.split(/(\*\*.*?\*\*|\*.*?\*)/g);
-    return parts.map((part, index) => {
-      if (part.startsWith("**") && part.endsWith("**")) {
-        return <strong key={index} className="font-semibold text-white">{part.slice(2, -2)}</strong>;
-      }
-      if (part.startsWith("*") && part.endsWith("*")) {
-        return <strong key={index} className="font-semibold text-white">{part.slice(1, -1)}</strong>;
-      }
-      return part;
+    const lines = content.split("\n");
+    return lines.map((line, lineIdx) => {
+      const parts = line.split(/(\*\*.*?\*\*|\*[^*]+?\*)/g);
+      return (
+        <React.Fragment key={lineIdx}>
+          {parts.map((part, index) => {
+            if (part.startsWith("**") && part.endsWith("**") && part.length > 4) {
+              return <strong key={index} className="font-semibold text-white">{part.slice(2, -2)}</strong>;
+            }
+            if (part.startsWith("*") && part.endsWith("*") && part.length > 2) {
+              return <strong key={index} className="font-semibold text-white">{part.slice(1, -1)}</strong>;
+            }
+            return part;
+          })}
+          {lineIdx < lines.length - 1 && <br />}
+        </React.Fragment>
+      );
     });
   };
 
@@ -205,8 +212,8 @@ export default function FloatingChatWidget() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick Prompts (if only 1 or 2 messages) */}
-          {messages.length <= 3 && (
+          {/* Quick Prompts (only at start) */}
+          {messages.length <= 1 && (
             <div className="px-3 pb-2 flex flex-wrap gap-1.5">
               {quickPrompts.map((q, i) => (
                 <button

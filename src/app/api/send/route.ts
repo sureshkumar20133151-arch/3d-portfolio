@@ -51,6 +51,8 @@ export async function POST(req: Request) {
       "https://suresh-n8n-fhr6.onrender.com/webhook/9cd991ba-dcbe-45e4-8ece-bcf3eee57a48";
     if (n8nWebhookUrl) {
       try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 7000);
         await fetch(n8nWebhookUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -65,7 +67,9 @@ export async function POST(req: Request) {
             submittedAt: new Date().toISOString(),
             source: "Website Contact Form",
           }),
+          signal: controller.signal,
         });
+        clearTimeout(timeoutId);
       } catch (webhookErr) {
         console.error("n8n Webhook Forwarding Error:", webhookErr);
       }

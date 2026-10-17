@@ -14,7 +14,14 @@ import { useMotionTemplate, useMotionValue, motion, AnimatePresence } from "moti
 const formSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
-  whatsapp: z.string().min(10, "WhatsApp number must be at least 10 digits").optional().or(z.literal("")),
+  whatsapp: z
+    .string()
+    .optional()
+    .refine((val) => {
+      if (!val || !val.trim()) return true;
+      const digits = val.replace(/\D/g, "");
+      return digits.length >= 7 && digits.length <= 15;
+    }, "Please enter a valid phone number or leave blank"),
   service: z.string().min(1, "Please select a service option"),
   budget: z.string().min(1, "Please select a budget range"),
   timeline: z.string().optional(),
@@ -109,23 +116,32 @@ const ContactForm = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<FieldErrors>({});
 
-  const whatsapp = whatsappNumber.trim() ? `${countryCode} ${whatsappNumber.trim().replace(/^\+?\d{1,4}\s*/, "")}` : "";
+  // Clean mobile number (remove leading zeroes like 09876543210 while preserving full number)
+  const cleanWhatsappNumber = whatsappNumber.trim().replace(/^0+/, "");
+  const whatsapp = cleanWhatsappNumber ? `${countryCode} ${cleanWhatsappNumber}` : "";
 
   const { toast } = useToast();
   const router = useRouter();
 
-  // Smart phone input change handler to auto-detect country code and prevent duplicate +91
+  // Smart phone input change handler to auto-detect country code and prevent duplicate codes
   const handlePhoneChange = (inputVal: string) => {
     let val = inputVal;
     for (const c of countryCodes) {
       if (val.startsWith(c.code)) {
         setCountryCode(c.code);
-        val = val.substring(c.code.length).trim();
+        val = val.slice(c.code.length).trim();
         break;
       }
     }
     if (val.startsWith("+")) {
-      val = val.replace(/^\+\d{1,4}\s*/, "").trim();
+      const match = val.match(/^\+\d{1,4}\s*/);
+      if (match) {
+        val = val.slice(match[0].length).trim();
+      }
+    }
+    // If user typed 91 before a 10-digit number without '+' (e.g. 919876543210)
+    if (countryCode === "+91" && /^\d{12}$/.test(val) && val.startsWith("91")) {
+      val = val.slice(2);
     }
     setWhatsappNumber(val);
     setErrors((p) => ({ ...p, whatsapp: undefined }));
@@ -191,8 +207,9 @@ const ContactForm = () => {
     if (!email.trim() || !/^\S+@\S+\.\S+$/.test(email.trim())) {
       tempErrors.email = "Please enter a valid email address";
     }
-    if (whatsappNumber.trim() && whatsappNumber.trim().replace(/\D/g, "").length < 5) {
-      tempErrors.whatsapp = "Please enter a valid phone number or leave blank";
+    const digitsOnly = whatsappNumber.replace(/\D/g, "");
+    if (whatsappNumber.trim() && (digitsOnly.length < 7 || digitsOnly.length > 15)) {
+      tempErrors.whatsapp = "Please enter a valid phone number (at least 7 to 10 digits) or leave blank";
     }
 
     if (Object.keys(tempErrors).length > 0) {
@@ -227,11 +244,31 @@ const ContactForm = () => {
     const result = formSchema.safeParse({ fullName, email, whatsapp, service, budget, timeline, message });
     if (!result.success) {
       const fieldErrors: FieldErrors = {};
+      let firstErrorMsg = "";
+      let targetStep = 3;
+
       result.error.issues.forEach((issue) => {
         const field = issue.path[0] as keyof FieldErrors;
-        if (!fieldErrors[field]) fieldErrors[field] = issue.message;
+        if (!fieldErrors[field]) {
+          fieldErrors[field] = issue.message;
+          if (!firstErrorMsg) firstErrorMsg = issue.message;
+        }
+        if (["fullName", "email", "whatsapp"].includes(field as string)) {
+          targetStep = Math.min(targetStep, 1);
+        } else if (["service", "budget"].includes(field as string)) {
+          targetStep = Math.min(targetStep, 2);
+        }
       });
+
       setErrors(fieldErrors);
+      if (targetStep !== 3) {
+        setStep(targetStep);
+      }
+      toast({
+        title: "Please check your details",
+        description: firstErrorMsg || "Some fields need your attention.",
+        variant: "destructive",
+      });
       return;
     }
 
